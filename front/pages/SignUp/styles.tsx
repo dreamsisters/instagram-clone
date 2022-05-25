@@ -1,8 +1,33 @@
 import styled from '@emotion/styled';
 
-export const Base = styled.div`
+export const SignBase = styled.div`
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+`;
+
+export const SignLargeImg = styled.div`
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 650px) {
+    display: none;
+  }
+  > img {
+    width: 65%;
+    min-width: 300px;
+  }
+`;
+export const SignSmallImg = styled.div`
+  display: none;
+  @media (max-width: 650px) {
+    display: block;
+    > img {
+      width: 200px;
+    }
+  }
 `;
 
 export const ModalInner = styled.div`
@@ -28,12 +53,14 @@ export const CloseButton = styled.div`
 
 export const Step = styled.div`
   width: 400px;
-  min-height: 800px;
-  background-color: #fff;
   padding: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > * {
+    margin: 10px 0;
+  }
   > .titles {
     text-align: center;
     margin-bottom: 60px;
@@ -62,6 +89,7 @@ export const Step = styled.div`
 `;
 
 export const Form = styled.form`
+  width: 80%;
   > .labels {
     display: flex;
     flex-direction: column;
@@ -78,7 +106,7 @@ export const Form = styled.form`
         width: 100%;
         padding: 10px;
         border: 1px solid #dfdfdf;
-
+        border-radius: 10px;
         &:focus {
           outline: none;
         }
@@ -90,30 +118,21 @@ export const Form = styled.form`
 export const Button = styled.button<{ disabled: boolean }>`
   padding: 10px;
   width: 100%;
-  border: 1px solid ${(props) => (props.disabled ? '#dfdfdf' : '#191919')};
-  background-color: ${(props) => (props.disabled ? 'f2f2f2' : '#fff')};
-  color: ${(props) => (props.disabled ? '#878787' : '#191919')};
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid ${(props) => (props.disabled ? '#dfdfdf' : 'rgba(0, 0, 0, 0.3)')};
+  background-color: ${(props) => (props.disabled ? '#f2f2f2' : '#2F9BFF')};
+  color: ${(props) => (props.disabled ? '#878787' : '#fff')};
 `;
 
 export const SocialLogins = styled.ul`
+  width: 100px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
   margin-top: 20px;
-
-  > li {
+  > img {
     width: 40px;
     height: 40px;
-    background-color: #f2f2f2;
-    border-radius: 50%;
-    font-size: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     margin-right: 10px;
-  }
-  > li:last-child {
-    margin: 0;
   }
 `;

@@ -1,6 +1,7 @@
 import { Nav, MenuItem, UserProfile, UserProfileCard, MenuList } from './styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import Menu from '@components/Menu';
+import Logo from '@components/Logo';
 import { Link } from 'react-router-dom';
 
 interface IProps {
@@ -24,7 +25,9 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
     <Nav>
       <div className={'inner'}>
         <div className="col logo">
-          <Link to="/">인스타그램</Link>
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
         <div className="col search-box">검색</div>
         <ul className="col menu">
