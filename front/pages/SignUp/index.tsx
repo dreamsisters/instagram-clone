@@ -1,7 +1,8 @@
-import { SignBase, SignLargeImg, SignSmallImg, Form, Step, Button } from './styles';
+import { SignBase, SignLargeImg, SignSmallImg, Form, Step, PrevButton, WhiteButton, Button } from './styles';
 import Modal from '@components/Modal';
 import React, { useCallback, useMemo, useState } from 'react';
 import CloseMessageModal from '@components/CloseMessageModal';
+import Logo from '@components/Logo';
 import { useForm } from 'react-hook-form';
 
 interface IFormValues {
@@ -69,105 +70,98 @@ const SignUp = () => {
   }, []);
 
   return (
-    <>
-      <SignBase>
+    <SignBase>
+      <SignLargeImg>
+        <img src="../../src-accets/SignLImg.png" />
+      </SignLargeImg>
+      <Step>
         {/* STEP 1 - 기본정보 */}
-        {/* <CloseMessageModal
+        <CloseMessageModal
           show={showFirstStep}
           onCloseModal={onCloseModal}
           subject={'회원가입을 중단하시겠어요?'}
           yes={'네'}
           no={'아니요'}
-        > */}
-        <SignLargeImg>
-          <img src="../../src-accets/SignLImg.png" />
-        </SignLargeImg>
-        <Step>
-          <div className={'titles'}>
-            <h1>인스타그램</h1>
-            <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
-          </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <div className={'labels'}>
-              <label>
-                <span>휴대폰 번호 또는 이메일 주소</span>
-                <input type={'text'} placeholder={'휴대폰 번호 또는 이메일 주소'} />
-              </label>
-              <label>
-                <span>성명</span>
-                <input type={'text'} placeholder={'성명'} />
-              </label>
-              <label>
-                <span>사용자 이름</span>
-                <input type={'text'} placeholder={'사용자 이름'} />
-              </label>
-              <label>
-                <span>비밀번호</span>
-                <input type={'text'} placeholder={'비밀번호'} />
-              </label>
+        >
+          <Step>
+            <div className={'titles'}>
+              <Logo />
+              <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
             </div>
-            <Button disabled={false} type={'submit'}>
-              계속 진행하기
-            </Button>
-          </Form>
-        </Step>
-        {/* </CloseMessageModal> */}
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <div className={'labels'}>
+                <label>
+                  <span>휴대폰 번호 또는 이메일 주소</span>
+                  <input type={'text'} placeholder={'휴대폰 번호 또는 이메일 주소'} />
+                </label>
+                <label>
+                  <span>성명</span>
+                  <input type={'text'} placeholder={'성명'} />
+                </label>
+                <label>
+                  <span>사용자 이름</span>
+                  <input type={'text'} placeholder={'사용자 이름'} />
+                </label>
+                <label>
+                  <span>비밀번호</span>
+                  <input type={'text'} placeholder={'비밀번호'} />
+                </label>
+              </div>
+              <Button disabled={false} type={'submit'}>
+                다음
+              </Button>
+            </Form>
+          </Step>
+        </CloseMessageModal>
         {/* STEP 2 - 생일 */}
-        {/* <CloseMessageModal
+        <CloseMessageModal
           show={showSecondStep}
           onCloseModal={onCloseModal}
           subject={'회원가입을 중단하시겠어요?'}
           yes={'네'}
           no={'아니요'}
-        > */}
-        <Step>
-          <div className={'titles'}>
-            <div className={'previous-button'} onClick={moveBackToFirst}>
-              이전으로
+        >
+          <PrevButton onClick={moveBackToFirst}>이전으로</PrevButton>
+          <Step>
+            <div className={'titles'}>
+              <h3>생일 추가</h3>
+              <p>공개 프로필에 포함되지 않습니다.</p>
             </div>
-            <h1>생일추가</h1>
-            <p>공개 프로필에 포함되지 않습니다.</p>
-          </div>
-          <Form onSubmit={handleSubmit(onSubmitBirth)}>
-            <div className={'labels'}>
-              <label>
-                <span>월</span>
-                <input type={'month'} placeholder={'월'} />
-              </label>
-              <label>
-                <span>일</span>
-                <input type={'date'} placeholder={'일'} />
-              </label>
-              <label>
-                <span>년도</span>
-                <input type={'year'} placeholder={'년'} />
-              </label>
-            </div>
-            <Button disabled={false} type={'submit'}>
-              가입하기
-            </Button>
-          </Form>
-        </Step>
-        {/* </CloseMessageModal> */}
+            <Form onSubmit={handleSubmit(onSubmitBirth)}>
+              <div className={'labels'}>
+                <label>
+                  <input type={'date'} placeholder={'일'} />
+                </label>
+              </div>
+              <Button disabled={false} type={'submit'}>
+                가입 완료
+              </Button>
+            </Form>
+          </Step>
+        </CloseMessageModal>
 
         {/* STEP 3 - 로그인 완료 */}
-        {/* <CloseMessageModal
+        <CloseMessageModal
           show={showLastStep}
           onCloseModal={onCloseModal}
           subject={'바로 입장(?) 진행하시겠어요?'}
           yes={'네'}
           no={'아니요'}
-        > */}
-        <Step>
-          <div className={'titles'}>
-            <h1>바로 로그인?</h1>
-            <p></p>
-          </div>
-          <div>로그인 완료....</div>
-        </Step>
-        {/* </CloseMessageModal> */}
-      </SignBase>
-    </>
+        >
+          <Step>
+            <div className={'titles'}>
+              <p>회원가입이 완료되었습니다.</p>
+            </div>
+            <a href="/sign_in">
+              <WhiteButton>로그인</WhiteButton>
+            </a>
+          </Step>
+        </CloseMessageModal>
+        <SignSmallImg>
+          <img src="../../src-accets/SignSImg.png" />
+        </SignSmallImg>
+      </Step>
+    </SignBase>
   );
 };
 

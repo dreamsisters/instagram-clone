@@ -1,6 +1,5 @@
-import { SignBase, SignLargeImg, SignSmallImg, Form, Step, Button, SocialLogins } from '../SignUp/styles';
+import { SignBase, SignLargeImg, SignSmallImg, Form, Step, WhiteButton, Button, SocialLogins } from '../SignUp/styles';
 import React, { useCallback, useMemo, useState } from 'react';
-import CloseAlertModal from '@components/CloseMessageModal';
 import Logo from '@components/Logo';
 import { useForm } from 'react-hook-form';
 
@@ -39,21 +38,10 @@ const SignIn = () => {
   return (
     <>
       <SignBase>
-        {/* <CloseAlertModal
-          show={show}
-          onCloseModal={onCloseModal}
-          subject={'로그인을 중단하시겠어요?'}
-          yes={'네'}
-          no={'아니요'}
-        > */}
         <SignLargeImg>
           <img src="../../src-accets/SignLImg.png" />
         </SignLargeImg>
         <Step>
-          {/* <div className={'titles'}>
-              <h1>인스타그램</h1>
-              <p>로그인</p>
-            </div> */}
           <Logo />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={'labels'}>
@@ -71,7 +59,9 @@ const SignIn = () => {
               로그인
             </Button>
           </Form>
-          <a href="/sign_up">회원 가입</a>
+          <a href="/sign_up">
+            <WhiteButton>회원 가입</WhiteButton>
+          </a>
           <SocialLogins>
             <img src="../../src-accets/Facebook.png" />
             <img src="../../src-accets/kakao.png" />
@@ -80,7 +70,6 @@ const SignIn = () => {
             <img src="../../src-accets/SignSImg.png" />
           </SignSmallImg>
         </Step>
-        {/* </CloseAlertModal> */}
       </SignBase>
     </>
   );

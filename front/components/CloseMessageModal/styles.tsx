@@ -1,12 +1,6 @@
 import styled from '@emotion/styled';
 
 export const CreateModal = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #f2f2f2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,7 +8,7 @@ export const CreateModal = styled.div`
 
 export const CloseMessage = styled.div`
   width: 410px;
-  //height: 220px;
+  /* //height: 220px; */
   background-color: #fff;
   border-radius: 10px;
   display: flex;
