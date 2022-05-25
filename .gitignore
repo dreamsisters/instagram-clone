@@ -1,3 +1,7 @@
 .DS_Store
 .idea
 .gitignore
+*/.gitignore
+back/.gitignore
+front/.gitignore
+front-test/.gitignore
