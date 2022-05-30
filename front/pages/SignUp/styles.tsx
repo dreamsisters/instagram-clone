@@ -132,6 +132,7 @@ export const Form = styled.form`
 export const Button = styled.button<{ disabled: boolean }>`
   padding: 10px;
   width: 100%;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 10px;
   border: 1px solid ${(props) => (props.disabled ? '#dfdfdf' : 'rgba(0, 0, 0, 0.3)')};
