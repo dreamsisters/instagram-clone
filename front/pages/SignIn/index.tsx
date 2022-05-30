@@ -10,7 +10,7 @@ interface IFormValues {
 
 const SignIn = () => {
   const [show, setShow] = useState(true);
-  const style = useMemo(() => ({ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }), []);
+  // const style = useMemo(() => ({ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }), []);
   const {
     register,
     handleSubmit,
@@ -27,9 +27,9 @@ const SignIn = () => {
 
   const { email, password } = watch();
 
-  const onCloseModal = useCallback(() => {
-    setShow(false);
-  }, []);
+  // const onCloseModal = useCallback(() => {
+  //   setShow(false);
+  // }, []);
 
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
@@ -45,14 +45,8 @@ const SignIn = () => {
           <Logo />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={'labels'}>
-              <label>
-                <span>전화번호, 사용자 이름 또는 이메일</span>
-                <input type={'text'} {...register('email')} placeholder={'전화번호, 사용자 이름 또는 이메일'} />
-              </label>
-              <label>
-                <span>비밀번호</span>
-                <input type={'text'} {...register('password')} placeholder={'비밀번호'} />
-              </label>
+              <input type={'text'} {...register('email')} placeholder={'전화번호, 사용자 이름 또는 이메일'} />
+              <input type={'text'} {...register('password')} placeholder={'비밀번호'} />
               <a href="/">비밀번호를 잊으셨나요?</a>
             </div>
             <Button disabled={false} type={'submit'}>

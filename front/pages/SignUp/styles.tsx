@@ -109,21 +109,25 @@ export const Form = styled.form`
     flex-direction: column;
     margin-bottom: 30px;
 
-    > label {
-      margin-bottom: 10px;
-      > span {
-        font-size: 13px;
-        display: block;
-        margin-bottom: 4px;
+    > input {
+      width: 100%;
+      height: 40px;
+      padding: 0px 10px;
+      margin-bottom: 15px;
+      border: 1px solid #dfdfdf;
+      border-radius: 10px;
+
+      /* input date 입력란 제외 */
+      &:focus:not(.dateInput) {
+        padding-top: 11px;
       }
-      > input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #dfdfdf;
-        border-radius: 10px;
-        &:focus {
-          outline: none;
-        }
+      /* placeholder 고정 & animation */
+      &:focus::placeholder {
+        position: absolute;
+        outline: none;
+        font-size: 10px;
+        transition: all 0.5s;
+        transform: translateY(-10px);
       }
     }
   }

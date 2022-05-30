@@ -90,22 +90,10 @@ const SignUp = () => {
             </div>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <div className={'labels'}>
-                <label>
-                  <span>휴대폰 번호 또는 이메일 주소</span>
-                  <input type={'text'} placeholder={'휴대폰 번호 또는 이메일 주소'} />
-                </label>
-                <label>
-                  <span>성명</span>
-                  <input type={'text'} placeholder={'성명'} />
-                </label>
-                <label>
-                  <span>사용자 이름</span>
-                  <input type={'text'} placeholder={'사용자 이름'} />
-                </label>
-                <label>
-                  <span>비밀번호</span>
-                  <input type={'text'} placeholder={'비밀번호'} />
-                </label>
+                <input type={'text'} placeholder={'휴대폰 번호 또는 이메일 주소'} />
+                <input type={'text'} placeholder={'성명'} />
+                <input type={'text'} placeholder={'사용자 이름'} />
+                <input type={'text'} placeholder={'비밀번호'} />
               </div>
               <Button disabled={false} type={'submit'}>
                 다음
@@ -129,9 +117,7 @@ const SignUp = () => {
             </div>
             <Form onSubmit={handleSubmit(onSubmitBirth)}>
               <div className={'labels'}>
-                <label>
-                  <input type={'date'} placeholder={'일'} />
-                </label>
+                <input type={'date'} placeholder={'일'} className="dateInput" />
               </div>
               <Button disabled={false} type={'submit'}>
                 가입 완료
