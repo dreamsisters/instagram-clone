@@ -105,31 +105,28 @@ export const Step = styled.div`
 export const Form = styled.form`
   width: 80%;
   > .labels {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 30px;
 
-    > input {
-      width: 100%;
-      height: 40px;
-      padding: 0px 10px;
+    & label {
       margin-bottom: 15px;
-      border: 1px solid #dfdfdf;
-      border-radius: 10px;
+      display: flex;
+      align-items: center;
 
-      /* input date 입력란 제외 */
-      &:focus:not(.dateInput) {
-        padding-top: 11px;
-      }
-      /* placeholder 고정 & animation */
-      &:focus::placeholder {
-        position: absolute;
-        outline: none;
+      > input:focus ~ p {
         font-size: 10px;
-        transition: all 0.5s;
-        transform: translateY(-10px);
+        transform: translateY(-12px);
+      }
+      > input {
+        width: 100%;
+        height: 40px;
+        padding: 5px 10px 0 10px;
+        border: 1px solid #dfdfdf;
+        border-radius: 10px;
       }
     }
+  }
+  > .toSignIn {
+    text-decoration: none;
   }
 `;
 
@@ -152,6 +149,7 @@ export const WhiteButton = styled.div`
   padding: 8px;
   border: 1px solid #dfdfdf;
   border-radius: 10px;
+  text-align: center;
 `;
 
 export const SocialLogins = styled.ul`

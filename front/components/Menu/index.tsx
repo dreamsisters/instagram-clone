@@ -11,6 +11,7 @@ interface IProps {
 const Menu: FC<IProps> = ({ children, style, show, onCloseModal }) => {
   const stopPropagation = useCallback((e: any) => {
     e.stopPropagation();
+    // onCloseModal();
   }, []);
 
   if (!show) return null;

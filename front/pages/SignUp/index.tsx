@@ -1,12 +1,13 @@
 import { SignBase, SignLargeImg, SignSmallImg, Form, Step, PrevButton, WhiteButton, Button } from './styles';
-import Modal from '@components/Modal';
-import React, { useCallback, useMemo, useState } from 'react';
-import CloseMessageModal from '@components/CloseMessageModal';
-import Logo from '@components/Logo';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import CloseMessageModal from '@components/CloseMessageModal';
+import InputLable from '@components/InputLable';
+import { CheckEmail, CheckName, CheckPassword, CheckNickname } from '@components/CheckValue';
+import Logo from '@components/Logo';
 
 interface IFormValues {
-  email?: string;
+  email: string;
   name: string;
   nickname: string;
   password: string;
@@ -17,7 +18,6 @@ const SignUp = () => {
   const [showSecondStep, setShowSecondStep] = useState(false);
   const [showLastStep, setShowLastStep] = useState(false);
 
-  const style = useMemo(() => ({ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }), []);
   const {
     register,
     handleSubmit,
@@ -36,12 +36,17 @@ const SignUp = () => {
 
   const { email, name, nickname, password } = watch();
 
-  const onCloseModal = useCallback(() => {
-    setShowFirstStep(false);
-    setShowSecondStep(false);
-    setShowLastStep(false);
-  }, []);
+  const [isEmail, setEmail] = useState(false);
+  const [isName, setName] = useState(false);
+  const [isNickname, setNickname] = useState(false);
+  const [isPassword, setPassword] = useState(false);
 
+  CheckEmail(email, setEmail);
+  CheckName(name, setName);
+  CheckNickname(nickname, setNickname);
+  CheckPassword(password, setPassword);
+
+  //Move Step
   const moveToSecond = useCallback(() => {
     setShowFirstStep(false);
     setShowSecondStep(true);
@@ -76,13 +81,7 @@ const SignUp = () => {
       </SignLargeImg>
       <Step>
         {/* STEP 1 - 기본정보 */}
-        <CloseMessageModal
-          show={showFirstStep}
-          onCloseModal={onCloseModal}
-          subject={'회원가입을 중단하시겠어요?'}
-          yes={'네'}
-          no={'아니요'}
-        >
+        <CloseMessageModal show={showFirstStep}>
           <Step>
             <div className={'titles'}>
               <Logo />
@@ -90,25 +89,35 @@ const SignUp = () => {
             </div>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <div className={'labels'}>
-                <input type={'text'} placeholder={'휴대폰 번호 또는 이메일 주소'} />
-                <input type={'text'} placeholder={'성명'} />
-                <input type={'text'} placeholder={'사용자 이름'} />
-                <input type={'text'} placeholder={'비밀번호'} />
+                <label>
+                  <input type={'email'} {...register('email', { required: true })} />
+                  <InputLable isValue={isEmail} text="이메일 주소" />
+                </label>
+                <label>
+                  <input type={'text'} {...register('name', { required: true })} />
+                  <InputLable isValue={isName} text="성명" />
+                </label>
+                <label>
+                  <input type={'text'} {...register('nickname', { required: true })} />
+                  <InputLable isValue={isNickname} text="사용자 이름" />
+                </label>
+                <label>
+                  <input type={'password'} {...register('password', { required: true })} />
+                  <InputLable isValue={isPassword} text="비밀번호" />
+                </label>
               </div>
               <Button disabled={false} type={'submit'}>
                 다음
               </Button>
             </Form>
+            <a href="/sign_in" className="toSignIn">
+              <WhiteButton>로그인 페이지로 이동</WhiteButton>
+            </a>
           </Step>
         </CloseMessageModal>
+
         {/* STEP 2 - 생일 */}
-        <CloseMessageModal
-          show={showSecondStep}
-          onCloseModal={onCloseModal}
-          subject={'회원가입을 중단하시겠어요?'}
-          yes={'네'}
-          no={'아니요'}
-        >
+        <CloseMessageModal show={showSecondStep}>
           <PrevButton onClick={moveBackToFirst}>이전으로</PrevButton>
           <Step>
             <div className={'titles'}>
@@ -127,18 +136,12 @@ const SignUp = () => {
         </CloseMessageModal>
 
         {/* STEP 3 - 로그인 완료 */}
-        <CloseMessageModal
-          show={showLastStep}
-          onCloseModal={onCloseModal}
-          subject={'바로 입장(?) 진행하시겠어요?'}
-          yes={'네'}
-          no={'아니요'}
-        >
+        <CloseMessageModal show={showLastStep}>
           <Step>
             <div className={'titles'}>
               <p>회원가입이 완료되었습니다.</p>
             </div>
-            <a href="/sign_in">
+            <a href="/sign_in" className="toSignIn">
               <WhiteButton>로그인</WhiteButton>
             </a>
           </Step>

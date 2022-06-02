@@ -10,12 +10,12 @@ interface IProps {
 }
 
 const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
-  const [showUserProfileMenu, setShoUserProfileMenu] = useState(true);
+  const [showUserProfileMenu, setShoUserProfileMenu] = useState(false);
   const style = useMemo(() => ({ top: 48, right: 0, width: '260px' }), []);
 
   const onCloseModal = useCallback(() => {}, []);
   const onCloseMenu = useCallback(() => {
-    setShoUserProfileMenu(false);
+    // setShoUserProfileMenu(false);
   }, []);
 
   const onClickUserProfile = useCallback(() => {

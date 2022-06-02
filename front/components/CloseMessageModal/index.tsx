@@ -4,14 +4,14 @@ import Modal from '@components/Modal';
 
 interface IProps {
   children: React.ReactNode;
-  onCloseModal: () => void;
+  // onCloseModal: () => void;
   show: boolean;
-  subject: string;
+  // subject: string;
   yes?: string;
   no?: string;
 }
 
-const CloseAlertModal: FC<IProps> = ({ children, onCloseModal, show, subject, yes, no }) => {
+const CloseAlertModal: FC<IProps> = ({ children, show, yes, no }) => {
   const [showAlertMessage, setShowAlertMessage] = useState(false);
 
   const onClickAlertMessage = useCallback(() => {
@@ -39,10 +39,8 @@ const CloseAlertModal: FC<IProps> = ({ children, onCloseModal, show, subject, ye
       </div>
       <Modal style={style} show={showAlertMessage}>
         <CloseMessage>
-          <div className={'title'}>{subject}</div>
-          <button className={'delete'} onClick={onCloseModal}>
-            {yes}
-          </button>
+          <div className={'title'}></div>
+          <button className={'delete'}>{yes}</button>
           <button className={'cancel'} onClick={onClickAlertMessage}>
             {no}
           </button>
