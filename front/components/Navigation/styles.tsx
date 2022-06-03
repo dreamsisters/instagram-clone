@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Nav = styled.nav`
   width: 100vw;
-  height: 50px;
+  height: 60px;
   border: 1px solid #dfdfdf;
   > .inner {
     max-width: 1200px;
@@ -10,6 +10,7 @@ export const Nav = styled.nav`
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 10px;
     margin: auto;
     position: relative;
@@ -18,6 +19,11 @@ export const Nav = styled.nav`
       width: 33.3%;
       display: flex;
       align-items: center;
+      > a > .navIcon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
     }
 
     > .col.logo {
@@ -29,31 +35,48 @@ export const Nav = styled.nav`
       }
     }
     > .col.search-box {
-      justify-content: center;
+      /* justify-content: center; */
       min-width: 30px;
-      height: 40px;
-      background-color: #f2f2f2;
+
+      > input {
+        width: 350px;
+        height: 35px;
+        padding-left: 10px;
+        margin-right: 5px;
+        border: none;
+        border-radius: 6px;
+        background-color: #f2f2f2;
+      }
     }
 
     > .col.menu {
+      display: flex;
       justify-content: flex-end;
-      min-width: 300px;
-      //background-color: gray;
+      > .iconBox {
+        width: 165px;
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 `;
 
 export const MenuItem = styled.li`
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
+  margin-right: 10px;
+  list-style: none;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
-  background-color: #f2f2f2;
-  margin-right: 10px;
-  cursor: pointer;
+  > .mdIcon {
+    width: 25px;
+    height: 25px;
+  }
+  > .fiIcon {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const UserProfile = styled.div`

@@ -1,8 +1,9 @@
-import { SignBase, SignLargeImg, SignSmallImg, Form, Step, Button, SocialLogins } from '../SignUp/styles';
+import { SignBase, SignLargeImg, SignSmallImg, Form, Step, WhiteButton, Button, SocialLogins } from '../SignUp/styles';
 import React, { useCallback, useMemo, useState } from 'react';
-import CloseAlertModal from '@components/CloseMessageModal';
 import Logo from '@components/Logo';
+import InputLable from '@components/InputLable';
 import { useForm } from 'react-hook-form';
+import { CheckEmail, CheckPassword } from '@components/CheckValue';
 
 interface IFormValues {
   email: string;
@@ -10,8 +11,6 @@ interface IFormValues {
 }
 
 const SignIn = () => {
-  const [show, setShow] = useState(true);
-  const style = useMemo(() => ({ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }), []);
   const {
     register,
     handleSubmit,
@@ -28,9 +27,11 @@ const SignIn = () => {
 
   const { email, password } = watch();
 
-  const onCloseModal = useCallback(() => {
-    setShow(false);
-  }, []);
+  const [isEmail, setEmail] = useState(false);
+  const [isPassword, setPassword] = useState(false);
+
+  CheckEmail(email, setEmail);
+  CheckPassword(password, setPassword);
 
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
@@ -39,31 +40,20 @@ const SignIn = () => {
   return (
     <>
       <SignBase>
-        {/* <CloseAlertModal
-          show={show}
-          onCloseModal={onCloseModal}
-          subject={'로그인을 중단하시겠어요?'}
-          yes={'네'}
-          no={'아니요'}
-        > */}
         <SignLargeImg>
           <img src="../../src-accets/SignLImg.png" />
         </SignLargeImg>
         <Step>
-          {/* <div className={'titles'}>
-              <h1>인스타그램</h1>
-              <p>로그인</p>
-            </div> */}
           <Logo />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={'labels'}>
               <label>
-                <span>전화번호, 사용자 이름 또는 이메일</span>
-                <input type={'text'} {...register('email')} placeholder={'전화번호, 사용자 이름 또는 이메일'} />
+                <input type={'email'} {...register('email')} />
+                <InputLable isValue={isEmail} text="이메일 주소" />
               </label>
               <label>
-                <span>비밀번호</span>
-                <input type={'text'} {...register('password')} placeholder={'비밀번호'} />
+                <input type={'password'} {...register('password')} />
+                <InputLable isValue={isPassword} text="비밀번호" />
               </label>
               <a href="/">비밀번호를 잊으셨나요?</a>
             </div>
@@ -71,16 +61,18 @@ const SignIn = () => {
               로그인
             </Button>
           </Form>
-          <a href="/sign_up">회원 가입</a>
+          <a href="/sign_up" className="toSignIn">
+            <WhiteButton>회원 가입</WhiteButton>
+          </a>
           <SocialLogins>
             <img src="../../src-accets/Facebook.png" />
             <img src="../../src-accets/kakao.png" />
           </SocialLogins>
+          {/* Logo media query(width: 650px) */}
           <SignSmallImg>
             <img src="../../src-accets/SignSImg.png" />
           </SignSmallImg>
         </Step>
-        {/* </CloseAlertModal> */}
       </SignBase>
     </>
   );
