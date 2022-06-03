@@ -124,6 +124,13 @@ export const Form = styled.form`
         border-radius: 10px;
       }
     }
+    > .dateInput {
+      width: 100%;
+      height: 40px;
+      padding: 5px 10px 0 10px;
+      border: 1px solid #dfdfdf;
+      border-radius: 10px;
+    }
   }
   > .toSignIn {
     text-decoration: none;
