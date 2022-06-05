@@ -1,40 +1,21 @@
 import { Nav, MenuItem, UserProfile, UserProfileCard, MenuList } from './styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
-import Menu from '@components/Menu';
-import Logo from '@components/Logo';
 import { Link } from 'react-router-dom';
+import Menu from '@components/Menu';
+import { Logo, MarketLogo } from '@components/Logo';
 import { MdSearch, MdNotificationsNone, MdOutlineApps, MdInsertPhoto } from 'react-icons/md';
 import { FiSend } from 'react-icons/fi';
-// icon list
-// MdAccountCircle
-// MdCheckCircleOutline
-// MdDeleteOutline
-// MdFavoriteBorder
-// MdFavorite
-// MdHighlightOff
-// MdLogout
-// MdPermIdentity
-// MdPeopleAlt
-// MdShare
-// MdOutlineHome
-// MdQuestionAnswer
-// MdOutlineShoppingBag
-// MdOutlineShoppingCart
-// MdOutlineStore
-// MdSupervisorAccount
-// MdClear
-// MdArrowBackIosNew
-// MdArrowForwardIos
-// MdAssignmentInd
-// MdBookmarkBorder
-// MdBookmark
 
 interface IProps {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  navState: string;
 }
 
-const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
+const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
+  //props 조건 별 nav 구분
+
+  //프로필 Menu Modal
   const [showUserProfileMenu, setShoUserProfileMenu] = useState(false);
   const style = useMemo(() => ({ top: 48, right: 0, width: '260px' }), []);
 
@@ -46,31 +27,33 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
   const onClickUserProfile = useCallback(() => {
     setShoUserProfileMenu((prev) => !prev);
   }, []);
+
   return (
     <Nav>
       <div className={'inner'}>
         <div className="col logo">
-          <Link to="/">
-            <Logo />
-          </Link>
+          {navState === 'market' && <MarketLogo />}
+          {navState === 'user' && <Logo />}
         </div>
         <div className="col search-box">
           <input type={'text'}></input>
-          <a href="/">
+          <Link to="/search">
             <MdSearch className="navIcon" />
-          </a>
+          </Link>
         </div>
         <ul className="col menu">
           {/* icon */}
           <div className="iconBox">
             <MenuItem>
-              <MdNotificationsNone className="mdIcon" />
+              <MdNotificationsNone className="mdIcon notification" />
             </MenuItem>
             <MenuItem>
-              <FiSend className="fiIcon" />
+              <Link to="/directs">
+                <FiSend className="fiIcon directs" />
+              </Link>
             </MenuItem>
             <MenuItem>
-              <MdOutlineApps className="mdIcon" />
+              <MdOutlineApps className="mdIcon moreIcon" />
             </MenuItem>
             <UserProfile onClick={onClickUserProfile}>아무개</UserProfile>
           </div>
@@ -96,4 +79,4 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
   );
 };
 
-export default Navigation;
+export default DefaultNav;

@@ -57,6 +57,17 @@ export const Nav = styled.nav`
         display: flex;
         justify-content: space-between;
       }
+      > a {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+        margin-right: 10px;
+        border: solid 1px #dfdfdf;
+        border-radius: 5px;
+      }
+      > a:last-child {
+        color: #fff;
+        background-color: #ff9595;
+      }
     }
   }
 `;
@@ -73,7 +84,7 @@ export const MenuItem = styled.li`
     width: 25px;
     height: 25px;
   }
-  > .fiIcon {
+  > a > .fiIcon {
     width: 20px;
     height: 20px;
   }

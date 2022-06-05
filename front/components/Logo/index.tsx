@@ -1,8 +1,19 @@
 import React from 'react';
 import { TxtLogo } from './styles';
+import { Link } from 'react-router-dom';
 
-const Logo = () => {
-  return <TxtLogo>instagram</TxtLogo>;
+export const Logo = () => {
+  return (
+    <Link to="/">
+      <TxtLogo>instagram</TxtLogo>
+    </Link>
+  );
 };
 
-export default Logo;
+export const MarketLogo = () => {
+  return (
+    <Link to="/market">
+      <TxtLogo>Market</TxtLogo>
+    </Link>
+  );
+};

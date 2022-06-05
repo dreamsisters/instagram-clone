@@ -1,8 +1,9 @@
 import { SignBase, SignLargeImg, SignSmallImg, Form, Step, WhiteButton, Button, SocialLogins } from '../SignUp/styles';
 import React, { useCallback, useMemo, useState } from 'react';
-import Logo from '@components/Logo';
+import { Logo } from '@components/Logo';
 import InputLable from '@components/InputLable';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { CheckEmail, CheckPassword } from '@components/CheckValue';
 
 interface IFormValues {
@@ -55,15 +56,15 @@ const SignIn = () => {
                 <input type={'password'} {...register('password')} />
                 <InputLable isValue={isPassword} text="비밀번호" />
               </label>
-              <a href="/">비밀번호를 잊으셨나요?</a>
+              <Link to="/">비밀번호를 잊으셨나요?</Link>
             </div>
             <Button disabled={false} type={'submit'}>
               로그인
             </Button>
           </Form>
-          <a href="/sign_up" className="toSignIn">
+          <Link to="/sign_up" className="toSignIn">
             <WhiteButton>회원 가입</WhiteButton>
-          </a>
+          </Link>
           <SocialLogins>
             <img src="../../src-accets/Facebook.png" />
             <img src="../../src-accets/kakao.png" />
