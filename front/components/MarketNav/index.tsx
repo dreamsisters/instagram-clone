@@ -1,7 +1,7 @@
 import { Nav, MenuItem, UserProfile, UserProfileCard, MenuList } from '../DefaultNav/styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Menu from '@components/Menu';
+import Menu from '@components/MenuModal';
 import { MarketLogo } from '@components/Logo';
 import { MdSearch, MdNotificationsNone, MdOutlineApps, MdInsertPhoto } from 'react-icons/md';
 import { FiSend } from 'react-icons/fi';
@@ -58,7 +58,7 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
           </div>
         </ul>
       </div>
-      <Menu style={style} show={showUserProfileMenu} onCloseModal={onCloseMenu}>
+      {/* <Menu style={style} show={showUserProfileMenu} onCloseModal={onCloseMenu}>
         <UserProfileCard>
           <div className={'user-avartar'}></div>
           <div className={'user-desc'}>
@@ -73,7 +73,7 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
           <li>계정 전환</li>
           <li className={'logout-button'}>로그아웃</li>
         </MenuList>
-      </Menu>
+      </Menu> */}
     </Nav>
   );
 };

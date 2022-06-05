@@ -72,10 +72,9 @@ export const Nav = styled.nav`
   }
 `;
 
-export const MenuItem = styled.li`
+export const MenuItem = styled.div`
   border-radius: 50%;
   margin-right: 10px;
-  list-style: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -104,7 +103,7 @@ export const UserProfile = styled.div`
 `;
 
 export const UserProfileCard = styled.div`
-  padding: 16px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #f2f2f2;
@@ -131,15 +130,15 @@ export const UserProfileCard = styled.div`
 `;
 
 export const MenuList = styled.ul`
-  padding-top: 10px;
   text-align: start;
   font-size: 14px;
+
   > li {
     padding: 10px 20px;
     width: 100%;
     border: none;
     background-color: #fff;
-
+    list-style: none;
     &:hover {
       background-color: #f2f2f2;
     }

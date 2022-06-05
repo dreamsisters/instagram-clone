@@ -28,7 +28,7 @@ const UnknownNav = () => {
         </div>
         <ul className="col menu">
           {/* link 태그 사용하지 않고 href 사용한 이유 */}
-          {/* 앱 상태 초기화 해 페이지 전환하기 위해 */}
+          {/* 앱 상태 초기화 & 페이지 전환하기 위해 */}
           <a href="/sign_in">로그인</a>
           <a href="/sign_up">회원 가입</a>
         </ul>

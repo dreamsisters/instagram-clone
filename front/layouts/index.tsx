@@ -14,7 +14,7 @@ const SignIn = loadable(() => import('@pages/SignIn'));
 const SignUp = loadable(() => import('@pages/SignUp'));
 
 const App = () => {
-  const [isLoggedIn, setLoggedInUser] = useState(false);
+  const [isLoggedIn, setLoggedInUser] = useState(true);
   //현재 페이지 경로
   let path = window.location.pathname;
   console.log(path);
