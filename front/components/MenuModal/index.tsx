@@ -15,7 +15,7 @@ const MenuModal: FC<IProps> = ({ children, style, show }) => {
 
   return (
     <ModalOverlay show={show}>
-      <ModalWrapper id="ModalWrapper">
+      <ModalWrapper>
         <ModalInner style={style}>{children}</ModalInner>
       </ModalWrapper>
     </ModalOverlay>

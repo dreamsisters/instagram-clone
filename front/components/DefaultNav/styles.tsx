@@ -72,7 +72,7 @@ export const Nav = styled.nav`
   }
 `;
 
-export const MenuItem = styled.div`
+export const MenuIcon = styled.div`
   border-radius: 50%;
   margin-right: 10px;
   cursor: pointer;
@@ -131,19 +131,44 @@ export const UserProfileCard = styled.div`
 
 export const MenuList = styled.ul`
   text-align: start;
-  font-size: 14px;
-
+  > a {
+    > li {
+      width: 100%;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      background-color: #fff;
+      list-style: none;
+      &:hover {
+        border-radius: 3px;
+        background-color: #f2f2f2;
+      }
+      > .mdICon {
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+      }
+    }
+  }
   > li {
-    padding: 10px 20px;
     width: 100%;
-    border: none;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
     background-color: #fff;
     list-style: none;
     &:hover {
+      border-radius: 3px;
       background-color: #f2f2f2;
     }
+    > .mdICon {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
   }
-
   > .logout-button {
     border-top: 1px solid #f2f2f2;
   }

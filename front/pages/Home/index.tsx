@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Base, PostContainer } from './styles';
 import Navigation from '@components/DefaultNav';
 import PostItem from '@components/PostItem';
-import PostModal from '@components/PostModal';
 
 const dummy = {
   name: '아무개',
@@ -21,8 +20,6 @@ const Home = () => {
       <div className={'content'}>
         <div>Story Area</div>
         <PostContainer>{/* <PostItem /> */}</PostContainer>
-
-        {/* <PostModal isClose={false} /> */}
       </div>
     </Base>
   );

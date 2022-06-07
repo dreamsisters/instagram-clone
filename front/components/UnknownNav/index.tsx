@@ -1,6 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Nav } from '../DefaultNav/styles';
-// import { Nav } from './styles';
 import { Logo } from '@components/Logo';
 import { Link } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';

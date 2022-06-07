@@ -51,7 +51,7 @@ const App = () => {
         <Route path="/search" component={Search} />
         <Route path="/directs" component={Directs} />
         <Route path="/market" component={Market} />
-        {/* <Route exact path="/setting" component={Setting} /> */}
+        {/* <Route path="/setting" component={Setting} /> */}
         <Route path="/sign_in" component={SignIn} />
         <Route path="/sign_up" component={SignUp} />
       </Switch>
