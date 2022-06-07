@@ -1,8 +1,9 @@
-import { Nav, MenuIcon, UserProfile, UserProfileCard, MenuList } from '../DefaultNav/styles';
+import { Nav, MenuIcon, UserProfile, MenuList } from '../DefaultNav/styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SmallModal from '@components/SmallModal';
 import { MarketLogo } from '@components/Logo';
+import ProfileMenuModal from '@components/ProfileMenuModal';
 import {
   MdOutlineHome as HomeIcon,
   MdSearch,
@@ -75,11 +76,9 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
             <MenuIcon>
               <NoticeIcon onClick={onNotice} className="mdIcon notice" />
               <SmallModal setState={setNotice} show={showNotice} style={noticeStyle}>
-                {
-                  <MenuList>
-                    <li>알림 목록 생성</li>
-                  </MenuList>
-                }
+                <MenuList>
+                  <li>알림 목록 생성</li>
+                </MenuList>
               </SmallModal>
             </MenuIcon>
             <MenuIcon>
@@ -90,40 +89,25 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
             <MenuIcon>
               <MoreIcon onClick={onMoreIcon} className="mdIcon moreIcon" />
               <SmallModal setState={setMoreIcon} show={showMoreIcon} style={moreIconStyle}>
-                {
-                  <MenuList>
-                    <a href="/">
-                      <li>
-                        <HomeIcon className="mdICon" />홈
-                      </li>
-                    </a>
+                <MenuList>
+                  <a href="/">
                     <li>
-                      <AddPost className="mdICon" />새 게시물 작성
+                      <HomeIcon className="mdICon" />홈
                     </li>
-                    <li>
-                      <LiveChat className="mdICon" />
-                      라이브 방송
-                    </li>
-                  </MenuList>
-                }
+                  </a>
+                  <li>
+                    <AddPost className="mdICon" />새 게시물 작성
+                  </li>
+                  <li>
+                    <LiveChat className="mdICon" />
+                    라이브 방송
+                  </li>
+                </MenuList>
               </SmallModal>
             </MenuIcon>
             <UserProfile onClick={onProfile}>아무개</UserProfile>
             <SmallModal setState={setProfileMenu} show={showProfileMenu} style={profileStyle}>
-              <UserProfileCard>
-                <div className={'user-avartar'}></div>
-                <div className={'user-desc'}>
-                  <span className={'user-nickname'}>아무개</span>
-                  <span className={'user-auth'}>amugae@gmail.com</span>
-                </div>
-              </UserProfileCard>
-              <MenuList>
-                <li>내 프로필</li>
-                <li>보관함</li>
-                <li>위시리스트</li>
-                <li>계정 설정</li>
-                <li className={'logout-button'}>로그아웃</li>
-              </MenuList>
+              <ProfileMenuModal />
             </SmallModal>
           </div>
         </ul>

@@ -1,7 +1,8 @@
-import { Nav, MenuIcon, UserProfile, UserProfileCard, MenuList } from './styles';
+import { Nav, MenuIcon, UserProfile, MenuList } from './styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MenuModal from '@components/MenuModal';
+import ProfileMenuModal from '@components/ProfileMenuModal';
 import { Logo } from '@components/Logo';
 import SmallModal from '@components/SmallModal';
 import {
@@ -112,20 +113,7 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
             </MenuIcon>
             <UserProfile onClick={onProfile}>아무개</UserProfile>
             <SmallModal setState={setProfileMenu} show={showProfileMenu} style={profileStyle}>
-              <UserProfileCard>
-                <div className={'user-avartar'}></div>
-                <div className={'user-desc'}>
-                  <span className={'user-nickname'}>아무개</span>
-                  <span className={'user-auth'}>amugae@gmail.com</span>
-                </div>
-              </UserProfileCard>
-              <MenuList>
-                <li>내 프로필</li>
-                <li>보관함</li>
-                <li>위시리스트</li>
-                <li>계정 설정</li>
-                <li className={'logout-button'}>로그아웃</li>
-              </MenuList>
+              <ProfileMenuModal />
             </SmallModal>
           </div>
         </ul>
