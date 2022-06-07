@@ -1,15 +1,17 @@
-import { Nav, MenuIcon, UserProfile, MenuList } from './styles';
+import { Nav, NavIcon, UserIcon, MenuList } from './styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MenuModal from '@components/MenuModal';
 import ProfileMenuModal from '@components/ProfileMenuModal';
+import FullModal from '@components/FullModal';
+import AddPost from '@components/AddPost';
 import { Logo } from '@components/Logo';
 import SmallModal from '@components/SmallModal';
 import {
   MdSearch,
   MdNotificationsNone as NoticeIcon,
   MdOutlineApps as MoreIcon,
-  MdOutlineAddPhotoAlternate as AddPost,
+  MdOutlineAddPhotoAlternate as AddPostIcon,
   MdOutlineRecordVoiceOver as LiveChat,
   MdOutlineShoppingBag as Shop,
 } from 'react-icons/md';
@@ -24,10 +26,12 @@ interface IProps {
 const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
   //props 조건 별 nav 구분
 
-  //nav Icon Modal
+  //Nav Icon Modal
   const [showNotice, setNotice] = useState(false);
   const [showMoreIcon, setMoreIcon] = useState(false);
   const [showProfileMenu, setProfileMenu] = useState(false);
+  //Add Post Modal
+  const [addPostModal, setAddPost] = useState(false);
 
   const noticeStyle = {
     top: 50,
@@ -60,6 +64,10 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
     setProfileMenu(!showProfileMenu);
   }, [showProfileMenu]);
 
+  const addPost = useCallback(() => {
+    setAddPost(!addPostModal);
+  }, [addPostModal]);
+
   return (
     <Nav>
       <div className={'inner'}>
@@ -74,44 +82,41 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
         </div>
         <ul className="col menu">
           <div className="iconBox">
-            <MenuIcon>
+            <NavIcon>
               <NoticeIcon onClick={onNotice} className="mdIcon notice" />
               <SmallModal setState={setNotice} show={showNotice} style={noticeStyle}>
-                {
-                  <MenuList>
-                    <li>알림 목록 생성</li>
-                  </MenuList>
-                }
+                <MenuList>
+                  <li>알림 목록 생성</li>
+                </MenuList>
               </SmallModal>
-            </MenuIcon>
-            <MenuIcon>
+            </NavIcon>
+            <NavIcon>
               <Link to="/directs">
                 <FiSend className="fiIcon directs" />
               </Link>
-            </MenuIcon>
-            <MenuIcon>
+            </NavIcon>
+            <NavIcon>
               <MoreIcon onClick={onMoreIcon} className="mdIcon moreIcon" />
               <SmallModal setState={setMoreIcon} show={showMoreIcon} style={moreIconStyle}>
-                {
-                  <MenuList>
-                    <a href="/market">
-                      <li>
-                        <Shop className="mdICon" />
-                        마켓
-                      </li>
-                    </a>
-                    <li>
-                      <AddPost className="mdICon" />새 게시물 작성
-                    </li>
-                    <li>
-                      <LiveChat className="mdICon" />
-                      라이브 방송
-                    </li>
-                  </MenuList>
-                }
+                <MenuList>
+                  <a href="/market">
+                    <Shop className="mdICon" />
+                    마켓
+                  </a>
+                  <button>
+                    <AddPostIcon onClick={addPost} className="mdICon" />새 게시물 작성
+                    <FullModal show={addPostModal} setState={setAddPost}>
+                      <AddPost />
+                    </FullModal>
+                  </button>
+                  <button>
+                    <LiveChat className="mdICon" />
+                    라이브 방송
+                  </button>
+                </MenuList>
               </SmallModal>
-            </MenuIcon>
-            <UserProfile onClick={onProfile}>아무개</UserProfile>
+            </NavIcon>
+            <UserIcon onClick={onProfile}>아무개</UserIcon>
             <SmallModal setState={setProfileMenu} show={showProfileMenu} style={profileStyle}>
               <ProfileMenuModal />
             </SmallModal>

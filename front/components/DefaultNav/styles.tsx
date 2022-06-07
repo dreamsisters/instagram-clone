@@ -72,7 +72,7 @@ export const Nav = styled.nav`
   }
 `;
 
-export const MenuIcon = styled.div`
+export const NavIcon = styled.div`
   border-radius: 50%;
   margin-right: 10px;
   cursor: pointer;
@@ -89,7 +89,7 @@ export const MenuIcon = styled.div`
   }
 `;
 
-export const UserProfile = styled.div`
+export const UserIcon = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -104,35 +104,35 @@ export const UserProfile = styled.div`
 
 export const MenuList = styled.ul`
   text-align: start;
+  list-style: none;
   > a {
-    > li {
-      width: 100%;
-      padding: 5px;
-      display: flex;
-      align-items: center;
-      font-size: 0.85rem;
-      background-color: #fff;
-      list-style: none;
-      &:hover {
-        border-radius: 3px;
-        background-color: #f2f2f2;
-      }
-      > .mdICon {
-        width: 25px;
-        height: 25px;
-        margin-right: 5px;
-      }
-    }
-  }
-  > li {
     width: 100%;
     padding: 5px;
     display: flex;
     align-items: center;
     font-size: 0.85rem;
     background-color: #fff;
-    list-style: none;
     &:hover {
+      cursor: pointer;
+      border-radius: 3px;
+      background-color: #f2f2f2;
+    }
+    > .mdICon {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
+  }
+  > button {
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    background-color: #fff;
+    border: none;
+    &:hover {
+      cursor: pointer;
       border-radius: 3px;
       background-color: #f2f2f2;
     }

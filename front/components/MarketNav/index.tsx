@@ -1,4 +1,4 @@
-import { Nav, MenuIcon, UserProfile, MenuList } from '../DefaultNav/styles';
+import { Nav, NavIcon, UserIcon, MenuList } from '../DefaultNav/styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SmallModal from '@components/SmallModal';
@@ -73,20 +73,20 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
         </div>
         <ul className="col menu">
           <div className="iconBox">
-            <MenuIcon>
+            <NavIcon>
               <NoticeIcon onClick={onNotice} className="mdIcon notice" />
               <SmallModal setState={setNotice} show={showNotice} style={noticeStyle}>
                 <MenuList>
                   <li>알림 목록 생성</li>
                 </MenuList>
               </SmallModal>
-            </MenuIcon>
-            <MenuIcon>
+            </NavIcon>
+            <NavIcon>
               <Link to="/directs">
                 <FiSend className="fiIcon directs" />
               </Link>
-            </MenuIcon>
-            <MenuIcon>
+            </NavIcon>
+            <NavIcon>
               <MoreIcon onClick={onMoreIcon} className="mdIcon moreIcon" />
               <SmallModal setState={setMoreIcon} show={showMoreIcon} style={moreIconStyle}>
                 <MenuList>
@@ -104,8 +104,8 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
                   </li>
                 </MenuList>
               </SmallModal>
-            </MenuIcon>
-            <UserProfile onClick={onProfile}>아무개</UserProfile>
+            </NavIcon>
+            <UserIcon onClick={onProfile}>아무개</UserIcon>
             <SmallModal setState={setProfileMenu} show={showProfileMenu} style={profileStyle}>
               <ProfileMenuModal />
             </SmallModal>
