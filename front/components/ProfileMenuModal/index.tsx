@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { UserProfile } from './styled';
 import { MenuList } from '../DefaultNav/styles';
 
@@ -6,18 +7,18 @@ const ProfileMenuModal = () => {
   return (
     <>
       <UserProfile>
-        <div className={'user-avartar'}></div>
-        <div className={'user-desc'}>
+        <Link to="/" className={'user-avartar'}></Link>
+        <Link to="/" className={'user-desc'}>
           <span className={'user-nickname'}>아무개</span>
           <span className={'user-auth'}>amugae@gmail.com</span>
-        </div>
+        </Link>
       </UserProfile>
       <MenuList>
-        <li>내 프로필</li>
-        <li>보관함</li>
-        <li>위시리스트</li>
-        <li>계정 설정</li>
-        <li className={'logout-button'}>로그아웃</li>
+        <Link to="/">내 프로필</Link>
+        <Link to="/">보관함</Link>
+        <a href="/market">위시리스트</a>
+        <Link to="/">계정 설정</Link>
+        <button className={'logout-button'}>로그아웃</button>
       </MenuList>
     </>
   );

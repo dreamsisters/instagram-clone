@@ -5,22 +5,20 @@ import {
   MdOutlineShoppingBag as Shop,
   MdOutlineClear as Clear,
   MdOutlineAddPhotoAlternate as AddPostIcon,
-  MdKeyboardArrowLeft as LeftBtn,
-  MdKeyboardArrowRight as RightBtn,
-  //   MdAddCircleOutline as PlusIcon,
 } from 'react-icons/md';
 import { IoAddSharp as PlusIcon } from 'react-icons/io5';
 interface IFormValues {}
 
 interface IProps {
   show?: boolean;
+  setState?: boolean;
 }
 
 const AddPost: FC<IProps> = () => {
   //step state
-  const [step1, setStep1] = useState(false);
+  const [step1, setStep1] = useState(true);
   const [step2, setStep2] = useState(false);
-  const [step3, setStep3] = useState(true);
+  const [step3, setStep3] = useState(false);
   //input state
   const [inputFile, setFile] = useState(false);
   let fileList = new DataTransfer();
@@ -41,6 +39,7 @@ const AddPost: FC<IProps> = () => {
         <Clear className="mdIcon" />
       </Header>
       <AddPostStep>
+        {/* input 파일 선택 */}
         <Step id="step1" show={step1}>
           <Form>
             <AddPostIcon className="mdIcon" />
@@ -50,7 +49,7 @@ const AddPost: FC<IProps> = () => {
             </label>
           </Form>
         </Step>
-
+        {/* 파일 미리보기 & 순서 변경 */}
         <Step id="step2" show={step2}>
           <LeftArrow name={'이전'} />
           <ImgPreview>
@@ -62,11 +61,10 @@ const AddPost: FC<IProps> = () => {
           </ImgPreview>
           <RightArrow name={'다음'} />
         </Step>
-
+        {/* 태그 추가 & text & data submit */}
         <Step className="step3" show={step3}>
           <div className="step3Box">
             <LeftArrow name={'이전'} />
-
             <PostPreview>
               <Images></Images>
               <PostText></PostText>

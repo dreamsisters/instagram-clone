@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 import SmallModal from '@components/SmallModal';
 import { MarketLogo } from '@components/Logo';
 import ProfileMenuModal from '@components/ProfileMenuModal';
+import FullModal from '@components/FullModal';
+import AddPost from '@components/AddPost';
 import {
   MdOutlineHome as HomeIcon,
   MdSearch,
   MdNotificationsNone as NoticeIcon,
   MdOutlineApps as MoreIcon,
-  MdOutlineAddPhotoAlternate as AddPost,
+  MdOutlineAddPhotoAlternate as AddPostIcon,
   MdOutlineRecordVoiceOver as LiveChat,
+  MdOutlineShoppingBag as Shop,
 } from 'react-icons/md';
 import { FiSend } from 'react-icons/fi';
 
@@ -27,6 +30,8 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
   const [showNotice, setNotice] = useState(false);
   const [showMoreIcon, setMoreIcon] = useState(false);
   const [showProfileMenu, setProfileMenu] = useState(false);
+  //Add Post Modal
+  const [addPostModal, setAddPost] = useState(false);
 
   const noticeStyle = {
     top: 50,
@@ -58,6 +63,12 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
   const onProfile = useCallback(() => {
     setProfileMenu(!showProfileMenu);
   }, [showProfileMenu]);
+
+  //게시물 작성 모달 show
+  const addPost = useCallback(() => {
+    setAddPost(!addPostModal);
+    setMoreIcon(false);
+  }, [addPostModal]);
 
   return (
     <Nav>
@@ -91,17 +102,19 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
               <SmallModal setState={setMoreIcon} show={showMoreIcon} style={moreIconStyle}>
                 <MenuList>
                   <a href="/">
-                    <li>
-                      <HomeIcon className="mdICon" />홈
-                    </li>
+                    <Shop className="mdICon" />
+                    마켓
                   </a>
-                  <li>
-                    <AddPost className="mdICon" />새 게시물 작성
-                  </li>
-                  <li>
+                  <button onClick={addPost}>
+                    <AddPostIcon className="mdICon" />새 게시물 작성
+                    <FullModal show={addPostModal} setState={setAddPost} setMoreIcon={setMoreIcon}>
+                      <AddPost />
+                    </FullModal>
+                  </button>
+                  <button>
                     <LiveChat className="mdICon" />
                     라이브 방송
-                  </li>
+                  </button>
                 </MenuList>
               </SmallModal>
             </NavIcon>

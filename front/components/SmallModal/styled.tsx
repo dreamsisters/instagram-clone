@@ -8,6 +8,7 @@ export const ModalOverlay = styled.div<{ show: boolean }>`
   overflow: hidden;
   display: ${(props) => (props.show == true ? 'flex' : 'none')};
   justify-content: center;
+  z-index: 400;
 `;
 
 export const ModalWrapper = styled.div`
@@ -16,6 +17,7 @@ export const ModalWrapper = styled.div`
   position: relative;
   top: 0;
   left: 0;
+  z-index: 450;
 `;
 
 export const ModalInner = styled.div`
@@ -27,4 +29,5 @@ export const ModalInner = styled.div`
   border: 1px solid #dfdfdf;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+  z-index: 500;
 `;

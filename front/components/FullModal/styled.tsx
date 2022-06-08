@@ -6,9 +6,10 @@ export const ModalOverlay = styled.div<{ show: boolean }>`
   top: 0;
   position: fixed;
   overflow: hidden;
-  /* display: ${(props) => (props.show == true ? 'flex' : 'none')}; */
-  display: flex;
+  display: ${(props) => (props.show == true ? 'flex' : 'none')};
+  /* display: flex; */
   justify-content: center;
+  z-index: 900;
 `;
 
 export const ModalWrapper = styled.div`
@@ -20,6 +21,7 @@ export const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: flex-end;
+  z-index: 950;
 `;
 
 export const ModalInner = styled.div`
@@ -33,4 +35,5 @@ export const ModalInner = styled.div`
   border-radius: 10px 10px 0 0;
   display: flex;
   flex-direction: column;
+  z-index: 1000;
 `;

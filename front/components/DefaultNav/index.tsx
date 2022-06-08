@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import MenuModal from '@components/MenuModal';
 import ProfileMenuModal from '@components/ProfileMenuModal';
 import FullModal from '@components/FullModal';
+import SmallModal from '@components/SmallModal';
 import AddPost from '@components/AddPost';
 import { Logo } from '@components/Logo';
-import SmallModal from '@components/SmallModal';
 import {
   MdSearch,
   MdNotificationsNone as NoticeIcon,
@@ -64,8 +64,10 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
     setProfileMenu(!showProfileMenu);
   }, [showProfileMenu]);
 
+  //게시물 작성 모달 show
   const addPost = useCallback(() => {
     setAddPost(!addPostModal);
+    setMoreIcon(false);
   }, [addPostModal]);
 
   return (
@@ -103,9 +105,9 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
                     <Shop className="mdICon" />
                     마켓
                   </a>
-                  <button>
-                    <AddPostIcon onClick={addPost} className="mdICon" />새 게시물 작성
-                    <FullModal show={addPostModal} setState={setAddPost}>
+                  <button onClick={addPost}>
+                    <AddPostIcon className="mdICon" />새 게시물 작성
+                    <FullModal show={addPostModal} setState={setAddPost} setMoreIcon={setMoreIcon}>
                       <AddPost />
                     </FullModal>
                   </button>

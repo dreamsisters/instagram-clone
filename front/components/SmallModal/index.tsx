@@ -1,4 +1,4 @@
-import ModalPortal from '@components/ModalPortal';
+import SmallModalPortal from '@components/SmallModalPortal';
 import styled, { CreateStyled } from '@emotion/styled/types/base';
 import React, { CSSProperties, FC, useCallback, useState } from 'react';
 import { ModalOverlay, ModalWrapper, ModalInner } from './styled';
@@ -16,17 +16,16 @@ interface IProps {
 const SmallModal: FC<IProps> = ({ children, show, style, setState }) => {
   const openModal = useCallback(() => {
     setState(!show);
-    console.log('click Overlay');
   }, [show]);
 
   return (
-    <ModalPortal>
-      <ModalOverlay show={show} onClick={openModal}>
+    <SmallModalPortal>
+      <ModalOverlay id="smallModal" show={show} onClick={openModal}>
         <ModalWrapper>
           <ModalInner style={style}>{children}</ModalInner>
         </ModalWrapper>
       </ModalOverlay>
-    </ModalPortal>
+    </SmallModalPortal>
   );
 };
 
