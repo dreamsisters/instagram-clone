@@ -14,6 +14,7 @@ import {
   MdOutlineAddPhotoAlternate as AddPostIcon,
   MdOutlineRecordVoiceOver as LiveChat,
   MdOutlineShoppingBag as Shop,
+  MdOutlineHome as Home,
 } from 'react-icons/md';
 import { FiSend } from 'react-icons/fi';
 
@@ -102,13 +103,12 @@ const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
               <SmallModal setState={setMoreIcon} show={showMoreIcon} style={moreIconStyle}>
                 <MenuList>
                   <a href="/">
-                    <Shop className="mdICon" />
-                    마켓
+                    <Home className="mdICon" />홈
                   </a>
                   <button onClick={addPost}>
                     <AddPostIcon className="mdICon" />새 게시물 작성
                     <FullModal show={addPostModal} setState={setAddPost} setMoreIcon={setMoreIcon}>
-                      <AddPost />
+                      <AddPost setState={setAddPost} />
                     </FullModal>
                   </button>
                   <button>

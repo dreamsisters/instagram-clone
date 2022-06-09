@@ -17,13 +17,6 @@ const FullModal: FC<IProps> = ({ children, show, style, setState, moreIcon, setM
   const openModal = useCallback(
     (e: any) => {
       e.stopPropagation();
-
-      if (e.target == e.currentTarget) {
-        setState(!show);
-        setMoreIcon(false);
-      } else {
-        return null;
-      }
     },
     [show],
   );

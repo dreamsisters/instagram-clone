@@ -47,8 +47,11 @@ export const Nav = styled.nav`
         border-radius: 6px;
         background-color: #f2f2f2;
       }
+      > input:focus {
+        outline-style: none;
+        background-color: #ebebeb;
+      }
     }
-
     > .col.menu {
       display: flex;
       justify-content: flex-end;
@@ -103,34 +106,19 @@ export const UserIcon = styled.div`
 `;
 
 export const MenuList = styled.ul`
-  text-align: start;
   list-style: none;
-  > a {
+  display: flex;
+  flex-direction: column;
+  > a,
+  button {
     width: 100%;
     padding: 5px;
-    display: flex;
-    align-items: center;
-    font-size: 0.85rem;
-    background-color: #fff;
-    &:hover {
-      cursor: pointer;
-      border-radius: 3px;
-      background-color: #f2f2f2;
-    }
-    > .mdICon {
-      width: 25px;
-      height: 25px;
-      margin-right: 5px;
-    }
-  }
-  > button {
-    width: 100%;
-    padding: 5px;
-    display: flex;
-    align-items: center;
+    margin: 3px 0;
     font-size: 0.85rem;
     background-color: #fff;
     border: none;
+    display: flex;
+    align-items: center;
     &:hover {
       cursor: pointer;
       border-radius: 3px;
@@ -142,7 +130,7 @@ export const MenuList = styled.ul`
       margin-right: 5px;
     }
   }
-  > .logout-button {
+  > .borderTop {
     border-top: 1px solid #f2f2f2;
   }
 `;

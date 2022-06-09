@@ -11,6 +11,7 @@ export const Header = styled.div`
     width: 20%;
     width: 25px;
     height: 25px;
+    cursor: pointer;
   }
 `;
 
@@ -26,7 +27,7 @@ export const Step = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show == true ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
-  > button {
+  /* > button {
     border: none;
     background: none;
     font-size: 0.9rem;
@@ -34,11 +35,13 @@ export const Step = styled.div<{ show: boolean }>`
     cursor: pointer;
     display: flex;
     align-items: center;
-  }
-  ${(props) => (props.className == 'step3' ? `flex-direction: column;` : null)};
-  > .step3Box {
-    display: flex;
-    align-items: flex-start;
+  } */
+  > .step3 {
+    flex-direction: column;
+    > div {
+      display: flex;
+      align-items: flex-start;
+    }
   }
 `;
 

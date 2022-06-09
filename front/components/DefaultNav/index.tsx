@@ -108,7 +108,7 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
                   <button onClick={addPost}>
                     <AddPostIcon className="mdICon" />새 게시물 작성
                     <FullModal show={addPostModal} setState={setAddPost} setMoreIcon={setMoreIcon}>
-                      <AddPost />
+                      <AddPost setState={setAddPost} />
                     </FullModal>
                   </button>
                   <button>
