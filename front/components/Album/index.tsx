@@ -17,7 +17,7 @@ const Album: FC<IProps> = ({ imgList }) => {
     value: albumStep,
   };
 
-  const Image = imgList.map(({ url, name, id }) => {
+  const Image = imgList.map(({ url, name }) => {
     return <Img key={name} src={url} alt={name} />;
   });
   return (

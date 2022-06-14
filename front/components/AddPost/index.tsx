@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Header, AddPostStep, Step, Form, PostPreview, ImgPreview, PostText } from './styled';
 import { LeftArrow, RightArrow } from '@components/ArrowBtn';
 import AlbumDND from '@components/AlbumDND';
@@ -64,15 +64,37 @@ const AddPost: FC<IProps> = ({ setState }) => {
   }, [postStep]);
 
   //input state
-  let files: any = {};
+  let files: any = [];
   const [inputFile, setFile] = useState(files);
 
+  //파일 중복 검사
+  function duplicateCheck(props: any) {
+    let duplicate: boolean = false;
+
+    const checkInput = Object.values(inputFile);
+    // inputFile 중 인자로 받은 name과 일치하는 요소는
+    checkInput.map((file: any) => {
+      if (file.name == props.name) {
+        //중복여부 true 반환
+        duplicate = true;
+      }
+    });
+    return duplicate;
+  }
+
+  //파일 추가 및 중복 검사
   const selectFile = (e: any) => {
     let Files = e.target.files;
     const fileArr = Object.values(Files);
     fileArr.map((file: any) => {
-      //선택한 파일들을 dt item으로 추가
-      dt.items.add(file);
+      if (duplicateCheck(file)) {
+        console.log(duplicateCheck(file));
+        alert(file.name + '은 이미 선택한 파일입니다.');
+      } else {
+        //중복여부 false인 file -> dt item으로 추가
+        console.log(file.name + ' is noting wrong');
+        dt.items.add(file);
+      }
     });
     //기존 file Obj + add file Obj = 새로운 state 지정
     let newFileObj = Object.assign({}, inputFile, dt.files);
@@ -81,7 +103,36 @@ const AddPost: FC<IProps> = ({ setState }) => {
     setPostStep(2);
   };
 
-  const deleteFile = () => {};
+  //선택 파일 삭제
+  //name 값이 일치하는 기준으로 delete
+  const deleteFile = (e: any) => {
+    //data-key 값 : file.name
+    let target = e.currentTarget;
+    let fileName = target.getAttribute('data-key');
+
+    const dtFiles = Object.values(dt.files);
+    //dt.files 중
+    dtFiles.map((file: any) => {
+      //선택한 사진의 key와 일치하는 name은
+      if (fileName == file.name) {
+        //dt.items에서 제거
+        dt.items.remove(file);
+        console.log(dt.files);
+      }
+    });
+
+    const inputFiles = Object.values(inputFile);
+    //inputFile 중
+    let newFileList: any = [];
+    inputFiles.map((file: any) => {
+      //선택한 사진의 key와 일치하지 않는 요소만 배열에 추가
+      if (fileName != file.name) {
+        newFileList.push(file);
+      }
+    });
+    setFile(newFileList);
+  };
+  // console.log(inputFile);
 
   return (
     <>
@@ -90,7 +141,7 @@ const AddPost: FC<IProps> = ({ setState }) => {
         <Clear className="mdIcon" onClick={onClear} />
       </Header>
       <AddPostStep>
-        {/* input 파일 선택 */}
+        {/* Step1 : input 파일 선택 */}
         <Step id="step1" show={step1}>
           <Form encType="multipart/form-data">
             <AddPostIcon className="mdIcon" />
@@ -100,16 +151,15 @@ const AddPost: FC<IProps> = ({ setState }) => {
             </label>
           </Form>
         </Step>
-        {/* 파일 미리보기 & 순서 변경 */}
+        {/* Step2 : 파일 미리보기 & 순서 변경 */}
         <Step id="step2" show={step2}>
           <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />
           <ImgPreview id="preview">
-            {/* <img src={readerFile} /> */}
             <AlbumDND fileObj={inputFile} selectFile={selectFile} deleteFile={deleteFile} />
           </ImgPreview>
           <RightArrow name={'다음'} stepObj={stepObj} setStep={setPostStep} length={stepLength} />
         </Step>
-        {/* 태그 추가 & text & data submit */}
+        {/* Step3 : 태그 추가 & text & data submit */}
         <Step className="step3" show={step3}>
           <div>
             <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />

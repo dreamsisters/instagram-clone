@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+// import { DndProvider, useDrag, useDrop } from 'react-dnd';
+// import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DragWrapper, DragBox, DragImg, Imagewrapper, CloseIcon } from './styled';
 import Album from '@components/Album';
 import { IoAddSharp as PlusIcon } from 'react-icons/io5';
@@ -23,12 +23,12 @@ const AlbumDND: FC<IProps> = ({ fileObj, selectFile, deleteFile }) => {
     const fileArr = Object.values(fileObj);
     //props로 받은 file data에 map 사용하기 위해 형 변환
     fileArr.map((file) => {
-      // DT.items.add(file);
       ImgList.push({
+        key: file.name,
         name: file.name,
         url: URL.createObjectURL(file),
       });
-      console.log(ImgList);
+      // console.log(ImgList);
     });
     setAlbumFile(ImgList);
     // window.URL.revokeObjectURL(ImgList);
@@ -37,9 +37,9 @@ const AlbumDND: FC<IProps> = ({ fileObj, selectFile, deleteFile }) => {
   const Image = albumList.map((image) => {
     return (
       //실제 drag 되는 대상
-      <Imagewrapper>
-        <DragImg key={image.name} src={image.url} alt={image.name} />
-        <CloseIcon onClick={deleteFile}>
+      <Imagewrapper key={image.name}>
+        <DragImg src={image.url} alt={image.name} />
+        <CloseIcon onClick={deleteFile} data-key={image.name}>
           <Clear className="mdIcon" />
         </CloseIcon>
       </Imagewrapper>
@@ -50,7 +50,10 @@ const AlbumDND: FC<IProps> = ({ fileObj, selectFile, deleteFile }) => {
     <>
       <Album imgList={albumList} />
       <DragWrapper>
+        {/* 드래그 영역 */}
+        {/* <DndProvider backend={HTML5Backend}> */}
         <DragBox>{Image}</DragBox>
+        {/* </DndProvider> */}
         <input onChange={selectFile} id="addFile" type="file" multiple />
         <label htmlFor="addFile">
           <PlusIcon className="plusIcon" />

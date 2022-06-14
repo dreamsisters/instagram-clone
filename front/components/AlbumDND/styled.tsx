@@ -37,6 +37,9 @@ export const Imagewrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  &:hover {
+    opacity: 80%;
+  }
 `;
 
 export const DragImg = styled.img`
@@ -48,6 +51,7 @@ export const DragImg = styled.img`
 export const CloseIcon = styled.button`
   width: 20px;
   height: 20px;
+  opacity: 50%;
   border: 1px solid #dfdfdf;
   border-radius: 50%;
   cursor: pointer;
