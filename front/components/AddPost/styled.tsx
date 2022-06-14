@@ -27,15 +27,6 @@ export const Step = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show == true ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
-  /* > button {
-    border: none;
-    background: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  } */
   > .step3 {
     flex-direction: column;
     > div {
@@ -65,6 +56,7 @@ export const Form = styled.form`
     background-color: #2f9bff;
     padding: 6px 30px;
     border-radius: 5px;
+    cursor: pointer;
     > input {
       display: none;
     }
@@ -83,31 +75,10 @@ export const ImgPreview = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  > .previewBox {
-    width: 500px;
-    height: 100px;
-    border: 1px solid #dfdfdf;
-    border-radius: 1px;
-    display: flex;
-    align-items: center;
-    > .album {
-      width: 85%;
-    }
-    > .plusIcon {
-      width: 55px;
-      height: 55px;
-      padding: 5px;
-      border: 1px solid #dfdfdf;
-      border-radius: 50%;
-    }
+  > img {
+    width: 100;
+    height: 100;
   }
-`;
-
-export const Images = styled.div`
-  width: 330px;
-  height: 330px;
-  margin-bottom: 50px;
-  background-color: #dfdfdf;
 `;
 
 export const PostText = styled.div`

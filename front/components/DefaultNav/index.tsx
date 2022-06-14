@@ -31,7 +31,7 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
   const [showMoreIcon, setMoreIcon] = useState(false);
   const [showProfileMenu, setProfileMenu] = useState(false);
   //Add Post Modal
-  const [addPostModal, setAddPost] = useState(false);
+  const [addPostModal, setAddPost] = useState(true);
 
   const noticeStyle = {
     top: 50,

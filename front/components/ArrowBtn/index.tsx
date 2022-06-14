@@ -6,50 +6,60 @@ interface IProps {
   name?: string; //버튼 옆 이름은 선택사항
   onClick?: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  step: number;
   length?: number;
+  stepObj?: any; //setpType: string, value: number
 }
 
-export const LeftArrow: FC<IProps> = ({ name, step, setStep }) => {
+export const LeftArrow: FC<IProps> = ({ name, stepObj, setStep }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    if (step == 1) {
+    if (stepObj.value == 1) {
       setShow(false);
     } else {
       setShow(true);
     }
-  }, [step]);
+  }, [stepObj.value]);
 
   function leftClick() {
-    setStep((step -= 1));
-    console.log(step);
+    if (stepObj?.stepType == 'postStep') {
+      //AddPost의 leftButton일 경우
+      if (stepObj.value == 2 || stepObj.value == 3) {
+        // step2,3에서 초기화 confirm
+        if (confirm('작성중인 내용이 사라집니다.')) {
+          setStep((stepObj.value -= 1)); //확인 후 step 이동 및 이전 내용 초기화
+          //Todo Step2. FileList reset & Step3. textarea reset
+        }
+      }
+    } else if (stepObj?.stepType == 'carousel') {
+      //이미지 carousel일 경우
+      setStep((stepObj.value -= 1));
+    }
   }
   return (
-    <Button onClick={leftClick} step={step} show={show} className="left">
+    <Button onClick={leftClick} step={stepObj.value} show={show} className="left">
       <LeftBtn className="mdArrow" />
       {name}
     </Button>
   );
 };
 
-export const RightArrow: FC<IProps> = ({ name, step, setStep, length }) => {
+export const RightArrow: FC<IProps> = ({ name, stepObj, setStep, length }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    if (step == length) {
+    if (stepObj.value == length) {
       setShow(false);
     } else {
       setShow(true);
     }
-  }, [step]);
+  }, [stepObj.value]);
 
   function rightClick() {
-    setStep((step += 1));
-    console.log(step);
+    setStep!((stepObj.value += 1));
   }
   return (
-    <Button onClick={rightClick} step={step} show={show} className="right">
+    <Button onClick={rightClick} step={stepObj.value} show={show} className="right">
       {name}
       <RightBtn className="mdArrow" />
     </Button>
