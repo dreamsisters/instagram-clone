@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-// import { Base } from './styles';
+import Example from './example';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const dummy = {
   name: '아무개',
@@ -10,7 +12,11 @@ const dummy = {
 };
 
 const Market = () => {
-  return <div>마켓</div>;
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <Example />
+    </DndProvider>
+  );
 };
 
 export default Market;

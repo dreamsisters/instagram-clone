@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Header, AddPostStep, Step, Form, PostPreview, ImgPreview, PostText } from './styled';
 import { LeftArrow, RightArrow } from '@components/ArrowBtn';
+import Album from '@components/Album';
 import AlbumDND from '@components/AlbumDND';
 import {
   MdOutlineShoppingBag as Shop,
@@ -104,20 +105,19 @@ const AddPost: FC<IProps> = ({ setState }) => {
   };
 
   //선택 파일 삭제
-  //name 값이 일치하는 기준으로 delete
+  //url 값이 일치하는 기준으로 delete
   const deleteFile = (e: any) => {
-    //data-key 값 : file.name
+    //data-key 값 : file.lastModifiedDate
     let target = e.currentTarget;
-    let fileName = target.getAttribute('data-key');
+    let fileDate = target.getAttribute('data-key');
 
     const dtFiles = Object.values(dt.files);
     //dt.files 중
     dtFiles.map((file: any) => {
-      //선택한 사진의 key와 일치하는 name은
-      if (fileName == file.name) {
+      //선택한 사진의 Date와 일치하는 파일은
+      if (fileDate == file.lastModified) {
         //dt.items에서 제거
         dt.items.remove(file);
-        console.log(dt.files);
       }
     });
 
@@ -125,14 +125,14 @@ const AddPost: FC<IProps> = ({ setState }) => {
     //inputFile 중
     let newFileList: any = [];
     inputFiles.map((file: any) => {
-      //선택한 사진의 key와 일치하지 않는 요소만 배열에 추가
-      if (fileName != file.name) {
+      //선택한 사진의 Date와 일치하지 않는 요소만 배열에 추가
+      if (fileDate != file.lastModified) {
         newFileList.push(file);
       }
     });
     setFile(newFileList);
   };
-  // console.log(inputFile);
+  // console.log('input date', inputFile);
 
   return (
     <>
@@ -165,7 +165,7 @@ const AddPost: FC<IProps> = ({ setState }) => {
             <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />
             <Form>
               <PostPreview>
-                {/* <Album fileList={fileList} /> */}
+                {/* <Album imgList={inputFile} /> */}
                 <PostText></PostText>
               </PostPreview>
               <button>submit</button>
