@@ -6,14 +6,16 @@ import Album from '@components/Album';
 import DragContainer from '@components/DragContainer';
 import { IoAddSharp as PlusIcon } from 'react-icons/io5';
 import { MdOutlineClear as Clear } from 'react-icons/md';
+import { isIdentifier } from 'typescript';
 
 interface IProps {
   fileObj: FileList;
+  setFile: React.Dispatch<any>;
   selectFile: (e: any) => void;
   deleteFile: (e: any) => void;
 }
 
-const AlbumDND: FC<IProps> = ({ fileObj, selectFile, deleteFile }) => {
+const AlbumDND: FC<IProps> = ({ fileObj, setFile, selectFile, deleteFile }) => {
   // console.log('file List', fileObj);
 
   //state 기본 값(형태) 선언
@@ -30,7 +32,7 @@ const AlbumDND: FC<IProps> = ({ fileObj, selectFile, deleteFile }) => {
         url: URL.createObjectURL(file),
         date: file.lastModified,
       });
-      // console.log(ImgList);
+      // console.log(typeof url);
     });
     setAlbumFile(ImgList);
     // window.URL.revokeObjectURL(ImgList);
@@ -54,7 +56,7 @@ const AlbumDND: FC<IProps> = ({ fileObj, selectFile, deleteFile }) => {
       <DragWrapper>
         {/* 드래그 영역 */}
         <DndProvider backend={HTML5Backend}>
-          <DragContainer albumList={albumList} deleteFile={deleteFile} />
+          <DragContainer setFile={setFile} fileObj={fileObj} albumList={albumList} deleteFile={deleteFile} />
         </DndProvider>
         <input onChange={selectFile} id="addFile" type="file" multiple />
         <label htmlFor="addFile">

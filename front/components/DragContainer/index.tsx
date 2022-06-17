@@ -5,8 +5,10 @@ import ImgItem from '@components/ImgItem';
 import update from 'immutability-helper';
 
 interface IProps {
-  albumList: any;
+  fileObj: FileList;
+  albumList: Array<any>;
   deleteFile: (e: any) => void;
+  setFile: React.Dispatch<any>;
 }
 
 export interface Item {
@@ -15,50 +17,47 @@ export interface Item {
   type: string;
 }
 
-const DragContainer = ({ albumList, deleteFile }: IProps) => {
-  // console.log(albumList);
-  const [fileList, setFileList] = useState(albumList);
+let files: Array<any> = [];
+let dtFiles: Array<any> = []; //File 객체
+
+const DragContainer = ({ fileObj, albumList, deleteFile, setFile }: IProps) => {
+  const [fileList, setFileList] = useState(files);
 
   useEffect(() => {
     setFileList(albumList);
-    // console.log(fileList);
+    files = [...albumList];
+    dtFiles = Object.values(fileObj);
   }, [albumList]);
 
-  const moveImg = (dragIndex: number, hoverIndex: number) => {
-    console.log('drag =', dragIndex, 'to =', hoverIndex);
-    const index = fileList.indexOf(dragIndex); //기존 index
-    console.log(index);
-  };
+  const moveItem = useCallback((dragIndex: number, dragObj: any, hoverIndex: number) => {
+    console.log('moving');
+    //dt에 해당하는 dragObj
+    let dtObj: File;
+    dtFiles.map((file) => {
+      if (file.lastModified == dragObj.date) {
+        dtObj = file;
+      }
+    });
 
-  const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
+    //index
+    const dtIindex = dtFiles.findIndex((file) => file.lastModified == dtObj.lastModified);
+    const fileIndex = files.findIndex((item) => item.date == dragObj.date);
+
     console.log('drag =', dragIndex, 'to =', hoverIndex);
-    // const index = idArr.indexOf(dragIndex); //기존 index
-    // console.log(index);
-    // console.log(albumList);
-    // let newList = [...fileList]; //fileList spread한 새로운 배열 생성
-    // console.log('spread', newList);
-    // newList.splice(index, 1); //기존 index의 item을 삭제하고
-    // console.log('delete', newList);
-    // newList.splice(hoverIndex, 0, fileId); //
-    // console.log('final', newList);
-    // setFileList(newList);
-    // setFileList((prevItems: Item[]) =>
-    //   update(prevItems, {
-    //     $splice: [
-    //       [dragIndex, 1],
-    //       [hoverIndex, 0, prevItems[dragIndex] as Item],
-    //     ],
-    //   }),
-    // );
-    // console.log('기존 위치 :', dragIndex);
-    // console.log('drop 위치 :', hoverIndex);
+    // console.log('item.date == dragObj.date : index', fileIndex);
+    dtFiles.splice(dtIindex, 1);
+    dtFiles.splice(hoverIndex, 0, dtObj!); //옮길 index로 drag 중인 item을 입력
+    setFile(dtFiles);
+    console.log(dtFiles);
+
+    //albumList
+    // let newList = [...files]; //fileList spread한 새로운 배열 생성
+    files.splice(fileIndex, 1); //drag 중인 item을 삭제하고
+    files.splice(hoverIndex, 0, dragObj); //옮길 index로 drag 중인 item을 입력
+    setFileList(files);
+    console.log(files);
   }, []);
 
-  // const renderItem = albumList.map((file: any, index: number) => {
-  //   return (
-  //     <ImgItem id={file.date} key={file.date} file={file} index={index} deleteFile={deleteFile} moveItem={moveItem} />
-  //   );
-  // });
   const [someDragging, setSomeDragging] = useState(false);
 
   const renderItem = useCallback((file: any, i: number) => {
@@ -69,14 +68,14 @@ const DragContainer = ({ albumList, deleteFile }: IProps) => {
         file={file}
         propsIndex={i}
         deleteFile={deleteFile}
-        moveItem={moveImg}
+        moveItem={moveItem}
         someDragging={someDragging}
         setSomeDragging={setSomeDragging}
       />
     );
   }, []);
 
-  return <DragBox>{fileList.map((file: any, i: number) => renderItem(file, i))}</DragBox>;
+  return <DragBox>{files.map((file: any, i: number) => renderItem(file, i))}</DragBox>;
 };
 
 export default DragContainer;

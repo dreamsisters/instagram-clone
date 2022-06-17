@@ -1,16 +1,15 @@
-import type { Identifier, XYCoord } from 'dnd-core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { Imagewrapper, DragImg, CloseIcon, DropLeft, DropRight } from './styled';
 import { MdOutlineClear as Clear } from 'react-icons/md';
 
 interface IProps {
-  propsId: number;
+  propsId: number; //index
   file: any; //file.name, url, date(key value)
   propsIndex: number;
   deleteFile: (e: any) => void;
-  moveItem: (fileId: number, hoverIndex: number) => void;
+  moveItem: (dragIndex: number, dragObj: object, hoverIndex: number) => void;
   someDragging: boolean;
   setSomeDragging: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -18,12 +17,17 @@ interface IProps {
 interface DragItem {
   propsIndex: number;
   propsId: number;
-  type: string;
+  dragObj: object;
 }
 
 const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging, setSomeDragging }: IProps) => {
-  // console.log('index', index);
-  // const ref = useRef<HTMLDivElement>(null);
+  const dragObj = {
+    name: file.name,
+    url: file.url,
+    date: file.date,
+  };
+
+  console.log('file index : ', propsIndex, file.name);
 
   // const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
   //   accept: 'ITEM',
@@ -36,8 +40,8 @@ const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging
   //       return;
   //     }
 
-  //     const dragIndex = file.index;
-  //     const hoverIndex = index;
+  //     const dragIndex = propsIndex;
+  //     const hoverIndex = item.propsIndex;
 
   //     if (dragIndex === hoverIndex) {
   //       return;
@@ -61,34 +65,38 @@ const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging
   //     file.index = hoverIndex;
   //   },
   // });
-  console.log(propsId, propsIndex);
-  const [{ isDragging }, dragRef, previewRef] = useDrag(() => ({
-    type: 'ITEM',
-    item: { propsId, propsIndex }, //props로 받아온 id, index
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(), //현재 dragging 중인지 리턴해줌
+  const [{ isDragging }, dragRef, previewRef] = useDrag(
+    () => ({
+      type: 'ITEM',
+      item: { propsId, propsIndex, dragObj }, //props로 받아온 id, index
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(), //현재 dragging 중인지 리턴해줌
+      }),
+      end: (item, monitor) => {
+        const didDrop = monitor.didDrop();
+        if (!didDrop) {
+          // console.log(dragObj.name, item.propsIndex);
+          //drop 가능한 영역이 아닐 경우
+          console.log('did drop');
+          moveItem(propsIndex, dragObj, propsIndex); //원래 위치로 이동
+        }
+      },
     }),
-    end: (item, monitor) => {
-      const { propsId, propsIndex } = item;
-      const didDrop = monitor.didDrop();
-      if (!didDrop) {
-        //drop 가능한 영역이 아닐 경우
-        console.log('did drop');
-        moveItem(propsId, propsIndex); //원래 위치로 이동
-      }
-    },
-  }));
+    [propsId, propsIndex],
+  );
 
   const [, dropLeft] = useDrop(
     () => ({
       accept: 'ITEM',
       // canDrop: () => true,
       hover: (item: DragItem) => {
-        // console.log(item);
-        // console.log('hover Item', item.propsId, item.propsIndex);
-        // console.log('props Item', propsId, propsIndex);
+        // console.log(item.dragObj);
+        // console.log('drag Item', item.propsId, item.propsIndex);
+        // console.log('hover Item', propsId, propsIndex);
+
         if (item.propsId !== propsId) {
-          moveItem(item.propsIndex, propsIndex);
+          moveItem(item.propsIndex, item.dragObj, propsIndex);
+          console.log('drag index', item.propsIndex, 'left hover, to', propsIndex);
         }
       },
     }),
@@ -100,26 +108,23 @@ const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging
       accept: 'ITEM',
       // canDrop: () => true,
       hover(item: DragItem) {
-        console.log('!== test', item.propsId, propsIndex + 1);
+        // console.log('!== test', item.propsId, propsIndex + 1);
 
         if (item.propsId !== propsId) {
-          item.propsIndex !== propsId + 1 && moveItem(item.propsId, propsId + 1);
+          item.propsIndex !== propsIndex + 1 && moveItem(item.propsIndex, item.dragObj, propsIndex + 1);
+          console.log('drag index ', item.propsIndex, 'right hover, to ', propsIndex + 1);
         }
       },
     }),
     [moveItem],
   );
 
-  // const [someDragging, setSomeDragging] = useState(false);
-
   useEffect(() => {
     isDragging ? setSomeDragging(true) : setSomeDragging(false);
   }, [isDragging, setSomeDragging]);
-
-  // drag(drop(ref));
   return (
-    <Imagewrapper ref={previewRef} style={{ opacity: isDragging ? '0.3' : '1' }}>
-      <DragImg ref={dragRef} src={file.url} alt={file.name} />
+    <Imagewrapper ref={dragRef} style={{ opacity: isDragging ? '0.3' : '1' }}>
+      <DragImg src={file.url} alt={file.name} />
       <CloseIcon onClick={deleteFile} data-key={file.date}>
         <Clear className="mdIcon" />
       </CloseIcon>

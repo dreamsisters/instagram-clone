@@ -155,7 +155,7 @@ const AddPost: FC<IProps> = ({ setState }) => {
         <Step id="step2" show={step2}>
           <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />
           <ImgPreview id="preview">
-            <AlbumDND fileObj={inputFile} selectFile={selectFile} deleteFile={deleteFile} />
+            <AlbumDND fileObj={inputFile} setFile={setFile} selectFile={selectFile} deleteFile={deleteFile} />
           </ImgPreview>
           <RightArrow name={'다음'} stepObj={stepObj} setStep={setPostStep} length={stepLength} />
         </Step>
