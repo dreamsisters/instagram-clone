@@ -6,24 +6,27 @@ interface IProps {
   name?: string; //버튼 옆 이름은 선택사항
   onClick?: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  move?: number;
+  setMove?: React.Dispatch<React.SetStateAction<number>>;
   length?: number;
   stepObj?: any; //setpType: string, value: number
 }
 
-export const LeftArrow: FC<IProps> = ({ name, stepObj, setStep }) => {
+export const LeftArrow: FC<IProps> = ({ name, stepObj, setStep, move, setMove }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (stepObj.value == 1) {
       setShow(false);
-    } else {
+    } else if (stepObj.value != 1) {
       setShow(true);
+      console.log(show);
     }
   }, [stepObj.value]);
 
   function leftClick() {
+    //AddPost의 leftButton일 경우
     if (stepObj?.stepType == 'postStep') {
-      //AddPost의 leftButton일 경우
       if (stepObj.value == 2 || stepObj.value == 3) {
         // step2,3에서 초기화 confirm
         if (confirm('작성중인 내용이 사라집니다.')) {
@@ -31,9 +34,12 @@ export const LeftArrow: FC<IProps> = ({ name, stepObj, setStep }) => {
           //Todo Step2. FileList reset & Step3. textarea reset
         }
       }
-    } else if (stepObj?.stepType == 'carousel') {
-      //이미지 carousel일 경우
+    }
+    //이미지 carousel일 경우
+    else if (stepObj?.stepType == 'albumStep') {
+      console.log('prev');
       setStep((stepObj.value -= 1));
+      setMove!((move! += 331));
     }
   }
   return (
@@ -44,19 +50,25 @@ export const LeftArrow: FC<IProps> = ({ name, stepObj, setStep }) => {
   );
 };
 
-export const RightArrow: FC<IProps> = ({ name, stepObj, setStep, length }) => {
+export const RightArrow: FC<IProps> = ({ name, stepObj, setStep, length, move, setMove }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (stepObj.value == length) {
       setShow(false);
-    } else {
+    } else if (stepObj.value != length) {
       setShow(true);
     }
   }, [stepObj.value]);
 
   function rightClick() {
-    setStep!((stepObj.value += 1));
+    if (stepObj?.stepType == 'postStep') {
+      setStep!((stepObj.value += 1));
+    } else if (stepObj?.stepType == 'albumStep') {
+      console.log('next');
+      setStep((stepObj.value += 1));
+      setMove!((move! -= 331));
+    }
   }
   return (
     <Button onClick={rightClick} step={stepObj.value} show={show} className="right">

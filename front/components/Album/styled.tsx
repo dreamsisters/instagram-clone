@@ -5,7 +5,7 @@ export const ImgWrapper = styled.div`
   width: 330px;
   height: 330px;
   margin-bottom: 50px;
-  background-color: #dfdfdf;
+  border: 1px solid #dfdfdf;
   position: relative;
   display: flex;
   align-items: center;
@@ -32,13 +32,15 @@ export const ImgWrapper = styled.div`
   }
 `;
 
-export const Images = styled.div<{ url: any }>`
+export const Images = styled.div<{ url: any; move: number }>`
   min-width: 330px;
   height: 100%;
 
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-position: center;
+
+  transform: translateX(${(props) => props.move + 'px'});
 `;
 
 export const ProcessDot = styled.div``;
