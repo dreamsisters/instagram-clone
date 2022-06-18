@@ -1,14 +1,11 @@
 import type { Identifier, XYCoord } from 'dnd-core';
-import type { FC } from 'react';
-import React, { useRef } from 'react';
+import { url } from 'inspector';
+import React, { useCallback, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { ItemTypes } from './ItemTypes';
 
-const style = {
-  border: '1px dashed gray',
-  cursor: 'move',
-};
+// let fileList;
 
 export interface ItemProps {
   id: any;
@@ -78,11 +75,42 @@ export const Item = ({ id, text, index, moveItem }: ItemProps) => {
     //[id, index, moveItem] : deps
   });
 
+  const [url, setURL] = useState('');
+
+  let fileList: Array<any> = [];
+  let fileURL: Array<any> = [];
+
+  const style = {
+    border: '1px dashed gray',
+    cursor: 'move',
+    width: '200px',
+    height: '100px',
+    backgroundImage: 'url(' + url + ')',
+  };
+
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
+  const change = useCallback((e: any) => {
+    let files = e.target.files;
+    const fileArr = Object.values(files);
+    fileArr.map((file: any) => {
+      fileList.push({
+        name: file.name,
+        url: URL.createObjectURL(file),
+        date: file.lastModified,
+      });
+      setURL(fileList[0].url);
+    });
+    console.log(url);
+  }, []);
+
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      {text}
-    </div>
+    <>
+      <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+        {text}
+      </div>
+      <input type="file" onChange={change}></input>
+    </>
   );
 };

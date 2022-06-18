@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
-export const Imagewrapper = styled.div`
+export const Imagewrapper = styled.div<{ url: any }>`
   width: 100px;
+  min-width: 100px;
   height: 100px;
   margin-right: 10px;
   overflow: hidden;
@@ -9,9 +10,11 @@ export const Imagewrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  &:hover {
-    opacity: 80%;
-  }
+
+  background-image: url(${(props) => props.url});
+  background-size: cover;
+  background-position: center;
+
   > .drop {
     width: 50%;
     height: 100%;
@@ -35,7 +38,6 @@ export const CloseIcon = styled.button`
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 1000;
   > .mdIcon {
   }
 `;

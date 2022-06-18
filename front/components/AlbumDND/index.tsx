@@ -1,12 +1,10 @@
-import React, { FC, useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import React, { FC, useEffect, useState } from 'react';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DragWrapper, DragBox, DragImg, Imagewrapper, CloseIcon } from './styled';
+import { DragWrapper } from './styled';
 import Album from '@components/Album';
 import DragContainer from '@components/DragContainer';
 import { IoAddSharp as PlusIcon } from 'react-icons/io5';
-import { MdOutlineClear as Clear } from 'react-icons/md';
-import { isIdentifier } from 'typescript';
 
 interface IProps {
   fileObj: FileList;
@@ -37,18 +35,6 @@ const AlbumDND: FC<IProps> = ({ fileObj, setFile, selectFile, deleteFile }) => {
     setAlbumFile(ImgList);
     // window.URL.revokeObjectURL(ImgList);
   }, [fileObj]);
-
-  const Image = albumList.map((image) => {
-    return (
-      //실제 drag 되는 대상
-      <Imagewrapper key={image.name}>
-        <DragImg src={image.url} alt={image.name} />
-        <CloseIcon onClick={deleteFile} data-key={image.name}>
-          <Clear className="mdIcon" />
-        </CloseIcon>
-      </Imagewrapper>
-    );
-  });
 
   return (
     <>

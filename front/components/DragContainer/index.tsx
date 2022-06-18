@@ -2,8 +2,6 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { DragBox } from './styled';
 import ImgItem from '@components/ImgItem';
 
-import update from 'immutability-helper';
-
 interface IProps {
   fileObj: FileList;
   albumList: Array<any>;

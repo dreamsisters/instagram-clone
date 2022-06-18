@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-import { Imagewrapper, DragImg, CloseIcon, DropLeft, DropRight } from './styled';
+import { Imagewrapper, CloseIcon, DropLeft, DropRight } from './styled';
 import { MdOutlineClear as Clear } from 'react-icons/md';
 
 interface IProps {
@@ -29,42 +29,6 @@ const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging
 
   console.log('file index : ', propsIndex, file.name);
 
-  // const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
-  //   accept: 'ITEM',
-  //   // canDrop: () => false,
-  //   collect(monitor: any) {
-  //     return { handlerId: monitor.getHandlerId() };
-  //   },
-  //   hover(file: DragItem, monitor) {
-  //     if (!ref.current) {
-  //       return;
-  //     }
-
-  //     const dragIndex = propsIndex;
-  //     const hoverIndex = item.propsIndex;
-
-  //     if (dragIndex === hoverIndex) {
-  //       return;
-  //     }
-
-  //     const hoverBoundingRect = ref.current?.getBoundingClientRect();
-  //     const hoverMiddleX = (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
-
-  //     const clientOffset = monitor.getClientOffset();
-  //     const hoverClientX = (clientOffset as XYCoord).x - hoverBoundingRect.right;
-
-  //     if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-  //       return;
-  //     }
-
-  //     if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-  //       return;
-  //     }
-
-  //     moveItem(id, dragIndex, hoverIndex);
-  //     file.index = hoverIndex;
-  //   },
-  // });
   const [{ isDragging }, dragRef, previewRef] = useDrag(
     () => ({
       type: 'ITEM',
@@ -122,9 +86,9 @@ const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging
   useEffect(() => {
     isDragging ? setSomeDragging(true) : setSomeDragging(false);
   }, [isDragging, setSomeDragging]);
+
   return (
-    <Imagewrapper ref={dragRef} style={{ opacity: isDragging ? '0.3' : '1' }}>
-      <DragImg src={file.url} alt={file.name} />
+    <Imagewrapper ref={dragRef} url={file.url} style={{ opacity: isDragging ? '0.3' : '1' }}>
       <CloseIcon onClick={deleteFile} data-key={file.date}>
         <Clear className="mdIcon" />
       </CloseIcon>

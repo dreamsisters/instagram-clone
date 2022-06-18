@@ -93,7 +93,7 @@ const AddPost: FC<IProps> = ({ setState }) => {
         alert(file.name + '은 이미 선택한 파일입니다.');
       } else {
         //중복여부 false인 file -> dt item으로 추가
-        console.log(file.name + ' is noting wrong');
+        console.log(file.name + ' is able');
         dt.items.add(file);
       }
     });
