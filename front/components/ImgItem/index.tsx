@@ -27,7 +27,7 @@ const ImgItem = ({ propsId, file, propsIndex, deleteFile, moveItem, someDragging
     date: file.date,
   };
 
-  console.log('file index : ', propsIndex, file.name);
+  // console.log('file index : ', propsIndex, file.name);
 
   const [{ isDragging }, dragRef, previewRef] = useDrag(
     () => ({

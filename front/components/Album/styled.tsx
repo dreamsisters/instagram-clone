@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-// export const ImgWrapper = styled.div`
 export const ImgWrapper = styled.div`
   width: 330px;
   height: 330px;
@@ -16,7 +15,6 @@ export const ImgWrapper = styled.div`
     display: flex;
     flex-direction: row;
     > .item {
-      /* transform: translateX(-330px); */
       transition: all 0.5s;
     }
   }
@@ -43,4 +41,18 @@ export const Images = styled.div<{ url: any; move: number }>`
   transform: translateX(${(props) => props.move + 'px'});
 `;
 
-export const ProcessDot = styled.div``;
+export const ProcessDot = styled.div<{ length: number }>`
+  display: ${(props) => (props.length == 1 ? 'none' : 'flex')};
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translate(-50%, -50%);
+`;
+
+export const Dot = styled.div<{ step: number; index: number }>`
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background-color: ${(props) => (props.step == props.index ? `#2F9BFF` : `rgba(232, 232, 232, 0.6)`)};
+`;

@@ -38,6 +38,7 @@ export const CloseIcon = styled.button`
   position: absolute;
   top: 5px;
   right: 5px;
+  z-index: 500;
   > .mdIcon {
   }
 `;
@@ -45,10 +46,10 @@ export const CloseIcon = styled.button`
 export const DropLeft = styled.div`
   padding: 10px 0 10px 10px;
   left: 0;
-  background-color: rgba(255, 123, 123, 0.5);
+  /* background-color: rgba(255, 123, 123, 0.5); */
 `;
 export const DropRight = styled.div`
   padding: 10px 10px 10px 0;
   right: 0;
-  background-color: rgba(225, 225, 123, 0.5);
+  /* background-color: rgba(225, 225, 123, 0.5); */
 `;
