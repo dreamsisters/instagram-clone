@@ -69,6 +69,14 @@ export const PostPreview = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  > .postText {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    > button {
+      /* width: ; */
+    }
+  }
 `;
 
 export const ImgPreview = styled.div`
@@ -87,4 +95,7 @@ export const Textarea = styled.textarea`
   width: 300px;
   height: 350px;
   resize: none;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  margin-bottom: 20px;
 `;

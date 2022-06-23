@@ -3,6 +3,8 @@ import { Header, AddPostStep, Step, Form, PostPreview, ImgPreview, Textarea } fr
 import { LeftArrow, RightArrow } from '@components/ArrowBtn';
 import Album from '@components/Album';
 import AlbumDND from '@components/AlbumDND';
+import Profile from '@components/Profile';
+import BlueBtn from '@components/BlueBtn';
 import {
   MdOutlineShoppingBag as Shop,
   MdOutlineClear as Clear,
@@ -19,11 +21,11 @@ let dt = new DataTransfer(); //CRUD 위해 사용
 
 const AddPost: FC<IProps> = ({ setState }) => {
   //post show state
-  const [step1, setStep1] = useState(true);
+  const [step1, setStep1] = useState(false);
   const [step2, setStep2] = useState(false);
-  const [step3, setStep3] = useState(false);
+  const [step3, setStep3] = useState(true);
   //step state
-  const [postStep, setPostStep] = useState(1);
+  const [postStep, setPostStep] = useState(3);
   const stepLength = 3;
   //album state
   let ImgList: Array<any> = [];
@@ -168,9 +170,10 @@ const AddPost: FC<IProps> = ({ setState }) => {
           <Form encType="multipart/form-data">
             <PostPreview>
               <Album imgList={album} type="read" />
-              <div>
+              <div className="postText">
+                <Profile />
                 <Textarea maxLength={2200} />
-                <button type="button">submit</button>
+                <BlueBtn type="button" text="업로드" />
               </div>
             </PostPreview>
           </Form>

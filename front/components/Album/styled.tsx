@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const ImgWrapper = styled.div<{ type: string }>`
   width: ${(props) => (props.type == 'read' ? `450px` : `330px`)};
   height: ${(props) => (props.type == 'read' ? `450px` : `330px`)};
-  margin-bottom: 50px;
+  margin-bottom: ${(props) => (props.type == 'read' ? `` : `50px`)};
   border: 1px solid #dfdfdf;
   position: relative;
   display: flex;
