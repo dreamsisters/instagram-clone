@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-export const ImgWrapper = styled.div`
-  width: 330px;
-  height: 330px;
+export const ImgWrapper = styled.div<{ type: string }>`
+  width: ${(props) => (props.type == 'read' ? `450px` : `330px`)};
+  height: ${(props) => (props.type == 'read' ? `450px` : `330px`)};
   margin-bottom: 50px;
   border: 1px solid #dfdfdf;
   position: relative;
@@ -31,7 +31,7 @@ export const ImgWrapper = styled.div`
 `;
 
 export const Images = styled.div<{ url: any; move: number }>`
-  min-width: 330px;
+  min-width: 100%;
   height: 100%;
 
   background-image: url(${(props) => props.url});
@@ -54,5 +54,5 @@ export const Dot = styled.div<{ step: number; index: number }>`
   height: 8px;
   margin-right: 5px;
   border-radius: 50%;
-  background-color: ${(props) => (props.step == props.index ? `#2F9BFF` : `rgba(232, 232, 232, 0.6)`)};
+  background-color: ${(props) => (props.step == props.index ? `#288eeccb` : `rgba(232, 232, 232, 0.6)`)};
 `;

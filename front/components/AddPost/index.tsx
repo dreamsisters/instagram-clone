@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Header, AddPostStep, Step, Form, PostPreview, ImgPreview, PostText } from './styled';
+import { Header, AddPostStep, Step, Form, PostPreview, ImgPreview, Textarea } from './styled';
 import { LeftArrow, RightArrow } from '@components/ArrowBtn';
 import Album from '@components/Album';
 import AlbumDND from '@components/AlbumDND';
@@ -25,6 +25,9 @@ const AddPost: FC<IProps> = ({ setState }) => {
   //step state
   const [postStep, setPostStep] = useState(1);
   const stepLength = 3;
+  //album state
+  let ImgList: Array<any> = [];
+  const [album, setAlbum] = useState(ImgList);
 
   const stepObj = {
     stepType: 'postStep',
@@ -105,7 +108,7 @@ const AddPost: FC<IProps> = ({ setState }) => {
     setPostStep(2);
     e.target.value = null;
   }, []);
-  console.log(inputFile);
+  // console.log(inputFile);
 
   //선택 파일 삭제
   const deleteFile = useCallback((e: any) => {
@@ -138,35 +141,39 @@ const AddPost: FC<IProps> = ({ setState }) => {
       </Header>
       <AddPostStep>
         {/* Step1 : input 파일 선택 */}
-        <Step id="step1" show={step1}>
-          <Form encType="multipart/form-data">
-            <AddPostIcon className="mdIcon" />
-            <label htmlFor="fileInput">
-              파일 선택하기
-              <input onChange={selectFile} id="fileInput" type="file" multiple />
-            </label>
-          </Form>
+        <Step show={step1}>
+          <AddPostIcon className="mdIcon" />
+          <label htmlFor="fileInput">
+            파일 선택하기
+            <input
+              onChange={selectFile}
+              id="fileInput"
+              type="file"
+              accept="image/jpg,image/png,image/heic,image/heif,video/mp4,video/quicktime"
+              multiple
+            />
+          </label>
         </Step>
         {/* Step2 : 파일 미리보기 & 순서 변경 */}
-        <Step id="step2" show={step2}>
+        <Step className="step2" show={step2}>
           <LeftArrow name={'이전'} dt={dt} setFile={setFile} stepObj={stepObj} setStep={setPostStep} />
           <ImgPreview id="preview">
-            <AlbumDND fileObj={inputFile} setFile={setFile} selectFile={selectFile} deleteFile={deleteFile} />
+            <AlbumDND fileObj={inputFile} setFile={setFile} setAlbum={setAlbum} deleteFile={deleteFile} />
           </ImgPreview>
           <RightArrow name={'다음'} stepObj={stepObj} setStep={setPostStep} length={stepLength} />
         </Step>
         {/* Step3 : 태그 추가 & text & data submit */}
         <Step className="step3" show={step3}>
-          <div>
-            <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />
-            <Form>
-              <PostPreview>
-                {/* <Album imgList={inputFile} /> */}
-                <PostText></PostText>
-              </PostPreview>
-              <button>submit</button>
-            </Form>
-          </div>
+          <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />
+          <Form encType="multipart/form-data">
+            <PostPreview>
+              <Album imgList={album} type="read" />
+              <div>
+                <Textarea maxLength={2200} />
+                <button type="button">submit</button>
+              </div>
+            </PostPreview>
+          </Form>
         </Step>
       </AddPostStep>
     </>

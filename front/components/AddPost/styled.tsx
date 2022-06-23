@@ -21,28 +21,20 @@ export const AddPostStep = styled.div`
   justify-content: center;
 `;
 
-export const Step = styled.div<{ show: boolean }>`
+export const Step = styled.div<{ show: boolean; className?: string }>`
   width: 100%;
   max-width: 1000px;
   display: ${(props) => (props.show == true ? 'flex' : 'none')};
+  flex-direction: ${(props) => (props.className == 'step2' ? 'row' : 'column')};
   justify-content: center;
-  align-items: center;
-  > .step3 {
-    flex-direction: column;
+  align-items: ${(props) => (props.className == 'step3' ? 'flex-start' : 'center')};
+  > .step2 {
+    flex-direction: row;
     > div {
       display: flex;
       align-items: flex-start;
     }
   }
-`;
-
-export const Form = styled.form`
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
   > .mdIcon {
     width: 150px;
     height: 150px;
@@ -63,7 +55,17 @@ export const Form = styled.form`
   }
 `;
 
+export const Form = styled.form`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const PostPreview = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +83,8 @@ export const ImgPreview = styled.div`
   }
 `;
 
-export const PostText = styled.div`
-  width: 400px;
+export const Textarea = styled.textarea`
+  width: 300px;
   height: 350px;
+  resize: none;
 `;

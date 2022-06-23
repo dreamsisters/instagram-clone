@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Button = styled.button<{ show: boolean; step: number; length?: number }>`
+export const Button = styled.button<{ show: boolean; step: number }>`
   border: none;
   background: none;
   font-size: 0.9rem;

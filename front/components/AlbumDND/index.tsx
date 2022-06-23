@@ -9,11 +9,11 @@ import { IoAddSharp as PlusIcon } from 'react-icons/io5';
 interface IProps {
   fileObj: FileList;
   setFile: React.Dispatch<any>;
-  selectFile: (e: any) => void;
+  setAlbum: React.Dispatch<React.SetStateAction<any[]>>;
   deleteFile: (e: any) => void;
 }
 
-const AlbumDND: FC<IProps> = ({ fileObj, setFile, selectFile, deleteFile }) => {
+const AlbumDND: FC<IProps> = ({ fileObj, setFile, setAlbum, deleteFile }) => {
   // console.log('file List', fileObj);
 
   //state 기본 값(형태) 선언
@@ -33,19 +33,19 @@ const AlbumDND: FC<IProps> = ({ fileObj, setFile, selectFile, deleteFile }) => {
       // console.log(typeof url);
     });
     setAlbumFile(ImgList);
+    setAlbum(ImgList); //step3 Album
     // window.URL.revokeObjectURL(ImgList);
   }, [fileObj]);
 
   return (
     <>
-      <Album imgList={albumList} />
+      <Album imgList={albumList} type="" />
       <DragWrapper>
         {/* 드래그 영역 */}
         <DndProvider backend={HTML5Backend}>
           <DragContainer setFile={setFile} fileObj={fileObj} albumList={albumList} deleteFile={deleteFile} />
         </DndProvider>
-        <input onChange={selectFile} id="addFile" type="file" multiple />
-        <label htmlFor="addFile">
+        <label htmlFor="fileInput">
           <PlusIcon className="plusIcon" />
         </label>
       </DragWrapper>

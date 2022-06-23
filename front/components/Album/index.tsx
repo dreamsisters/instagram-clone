@@ -1,18 +1,29 @@
-import React, { FC, useEffect, useState, useCallback } from 'react';
+import React, { FC, useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { ImgWrapper, Images, ProcessDot, Dot } from './styled';
 import { LeftArrow, RightArrow } from '@components/ArrowBtn';
 
 interface IProps {
   children?: React.ReactNode;
   name?: string; //버튼 옆 이름 선택사항
+  type: string;
   imgList: Array<string | number>;
 }
 
-const Album: FC<IProps> = ({ imgList }) => {
+const Album: FC<IProps> = ({ imgList, type }) => {
   //carousel state
   const [albumStep, setAlbumStep] = useState(1);
   //step이 '1' 증감 할 때마다 '330px' 이동
   const [transform, setTransform] = useState(0);
+  // console.log(transform);
+
+  //carousel width
+  // const widthRef = useRef<any>(0);
+  // const [albumWidth, setAlbumWidth] = useState(0);
+
+  // useEffect(() => {
+  //   setAlbumWidth(widthRef.current?.offsetWidth);
+  // }, [imgList]);
+  // console.log('album width', albumWidth);
 
   //이미지 리스트에 변동이 생기면 step 초기화
   useEffect(() => {
@@ -21,9 +32,6 @@ const Album: FC<IProps> = ({ imgList }) => {
   }, [imgList]);
 
   let albumLength = imgList.length;
-  // const [length, setLength] = useState(albumLength);
-  console.log(imgList);
-  console.log(albumLength);
 
   const albumObj = {
     stepType: 'albumStep',
@@ -44,7 +52,6 @@ const Album: FC<IProps> = ({ imgList }) => {
 
   const renderItem = useCallback(
     (file: any) => {
-      // console.log(file);
       return <Images key={file.date} url={file.url} className="item" move={transform} />;
     },
     [transform],
@@ -58,13 +65,14 @@ const Album: FC<IProps> = ({ imgList }) => {
   );
 
   return (
-    <ImgWrapper>
+    <ImgWrapper type={type}>
       <LeftArrow
         stepObj={albumObj}
         length={albumLength}
         setStep={setAlbumStep}
         move={transform}
         setMove={setTransform}
+        width={type}
       />
       <RightArrow
         stepObj={albumObj}
@@ -72,6 +80,7 @@ const Album: FC<IProps> = ({ imgList }) => {
         setStep={setAlbumStep}
         move={transform}
         setMove={setTransform}
+        width={type}
       />
       <div className="carousel">{imgList.map((file) => renderItem(file))}</div>
       <ProcessDot length={albumLength}>{imgList.map((img, i) => renderDot(albumStep, i))}</ProcessDot>

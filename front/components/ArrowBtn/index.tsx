@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Button } from './styled';
 import { MdKeyboardArrowLeft as LeftBtn, MdKeyboardArrowRight as RightBtn } from 'react-icons/md';
 
@@ -11,10 +11,11 @@ interface IProps {
   move?: number;
   setMove?: React.Dispatch<React.SetStateAction<number>>;
   length?: number;
+  width?: string;
   stepObj?: any; //setpType: string, value: number, length
 }
 
-export const LeftArrow: FC<IProps> = ({ name, dt, stepObj, setFile, setStep, move, setMove }) => {
+export const LeftArrow: FC<IProps> = ({ name, dt, stepObj, setFile, setStep, move, setMove, width }) => {
   const [show, setShow] = useState(true);
   let files: any = [];
 
@@ -24,12 +25,11 @@ export const LeftArrow: FC<IProps> = ({ name, dt, stepObj, setFile, setStep, mov
         setShow(false);
       } else if (stepObj.value != 1) {
         setShow(true);
-        console.log(show);
       }
     }
   }, [stepObj.value]);
 
-  function leftClick() {
+  const leftClick = () => {
     //AddPost의 leftButton일 경우
     if (stepObj?.stepType == 'postStep') {
       // step2,3에서 초기화 confirm
@@ -52,23 +52,28 @@ export const LeftArrow: FC<IProps> = ({ name, dt, stepObj, setFile, setStep, mov
     else if (stepObj?.stepType == 'albumStep') {
       console.log('prev');
       setStep((stepObj.value -= 1));
-      setMove!((move! += 331));
+      if (width == 'read') {
+        setMove!((move! += 448));
+      }
+      if (width == '') {
+        setMove!((move! += 328));
+      }
     }
-  }
+  };
   return (
-    <Button onClick={leftClick} step={stepObj.value} show={show} className="left">
+    <Button type="button" onClick={leftClick} step={stepObj.value} show={show} className="left">
       <LeftBtn className="mdArrow" />
       {name}
     </Button>
   );
 };
 
-export const RightArrow: FC<IProps> = ({ name, stepObj, setStep, length, move, setMove }) => {
+export const RightArrow: FC<IProps> = ({ name, stepObj, setStep, length, move, width, setMove }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (stepObj.stepType == 'albumStep') {
-      console.log(length);
+      // console.log(length);
       if (length == 1) {
         console.log('length 1');
         setShow(false);
@@ -78,19 +83,25 @@ export const RightArrow: FC<IProps> = ({ name, stepObj, setStep, length, move, s
         setShow(true);
       }
     }
-  });
+  }, [stepObj.value, width]);
 
-  function rightClick() {
+  const rightClick = () => {
     if (stepObj?.stepType == 'postStep') {
       setStep!((stepObj.value += 1));
     } else if (stepObj?.stepType == 'albumStep') {
       console.log('next');
       setStep((stepObj.value += 1));
-      setMove!((move! -= 331));
+      if (width == 'read') {
+        setMove!((move! -= 448));
+      }
+      if (width == '') {
+        setMove!((move! -= 328));
+      }
     }
-  }
+  };
+
   return (
-    <Button onClick={rightClick} step={stepObj.value} show={show} className="right">
+    <Button type="button" onClick={rightClick} step={stepObj.value} show={show} className="right">
       {name}
       <RightBtn className="mdArrow" />
     </Button>
