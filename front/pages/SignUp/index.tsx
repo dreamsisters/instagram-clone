@@ -81,11 +81,6 @@ const SignUp = () => {
     moveToLast();
   }, []);
 
-  const onSubmitBirth = useCallback((data: IFormValues) => {
-    console.log(data);
-    moveToLast();
-  }, []);
-
   return (
     <SignBase>
       <SignLargeImg>
