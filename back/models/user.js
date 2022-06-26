@@ -1,11 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
+  // 테이블명(users)
   const User = sequelize.define(
     "User",
     {
-      // id
+      // id는 자동으로 설정됨
       email: {
         type: DataTypes.STRING(30),
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING(30),
@@ -18,27 +19,22 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         type: DataTypes.STRING(30),
         allowNull: false,
+        unique: true,
       },
       password: {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
-
+      avartar: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+      },
       bio: {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      gender: {
-        type: DataTypes.STRING(6),
-        allowNull: true,
-      },
-      birth: {
-        type: DataTypes.STRING(30),
-        allowNull: true,
-      },
-      thumbnailImageSrc: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
+      snsId: {
+        type: DataTypes.STRING(50),
       },
     },
     {
@@ -46,23 +42,21 @@ module.exports = (sequelize, DataTypes) => {
       collate: "utf8_general_ci",
     }
   );
-
   User.associate = (db) => {
-    db.User.hasMany(db.Post);
+    db.User.hasMany(db.Hashtag);
     db.User.hasMany(db.Comment);
     db.User.belongsToMany(db.User, {
-      through: "Follow", // 중간 테이블 명 변경
+      through: "Follow",
+      foreignKey: "followingId",
       as: "Followers",
-      foreignKey: "FollowingId",
     });
     db.User.belongsToMany(db.User, {
       through: "Follow",
+      foreignKey: "followerId",
       as: "Followings",
-      foreignKey: "FollowerId",
     });
+    db.User.hasMany(db.Post); // as로 별칭 구분 , through - 중간테이블명
     db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" });
-
-    return User;
   };
   return User;
 };

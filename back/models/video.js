@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
+  // 테이블명(videos)
   const Video = sequelize.define(
     "Video",
     {
-      // id
+      // id는 자동으로 설정됨
       src: {
         type: DataTypes.STRING(200),
-        allowNull: false,
       },
     },
     {
@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       collate: "utf8_general_ci",
     }
   );
-
   Video.associate = (db) => {
     db.Video.belongsTo(db.Post);
   };
