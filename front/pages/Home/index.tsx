@@ -1,6 +1,7 @@
-import Navigation from '@components/Navigation';
-import { Base } from './styles';
 import React, { useState } from 'react';
+import { Base, PostContainer } from './styles';
+import Navigation from '@components/DefaultNav';
+import PostItem from '@components/PostItem';
 
 const dummy = {
   name: '아무개',
@@ -10,14 +11,15 @@ const dummy = {
   birth: '991010',
 };
 
+//메인 post 나열 페이지
 const Home = () => {
   const [isLoggedIn, setLoggedInUser] = useState(false);
 
   return (
     <Base>
-      <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedInUser} />
       <div className={'content'}>
-        <div>홈</div>
+        <div>Story Area</div>
+        <PostContainer>{/* <PostItem /> */}</PostContainer>
       </div>
     </Base>
   );

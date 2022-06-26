@@ -1,10 +1,11 @@
 import { SignBase, SignLargeImg, SignSmallImg, Form, Step, PrevButton, WhiteButton, Button } from './styles';
 import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import CloseMessageModal from '@components/CloseMessageModal';
 import InputLable from '@components/InputLable';
 import { CheckEmail, CheckName, CheckPassword, CheckNickname } from '@components/CheckValue';
-import Logo from '@components/Logo';
+import { Logo } from '@components/Logo';
 
 interface IFormValues {
   email: string;
@@ -110,9 +111,9 @@ const SignUp = () => {
                 다음
               </Button>
             </Form>
-            <a href="/sign_in" className="toSignIn">
+            <Link to="/sign_in" className="toSignIn">
               <WhiteButton>로그인 페이지로 이동</WhiteButton>
-            </a>
+            </Link>
           </Step>
         </CloseMessageModal>
 
@@ -141,9 +142,9 @@ const SignUp = () => {
             <div className={'titles'}>
               <p>회원가입이 완료되었습니다.</p>
             </div>
-            <a href="/sign_in" className="toSignIn">
+            <Link to="/sign_in" className="toSignIn">
               <WhiteButton>로그인</WhiteButton>
-            </a>
+            </Link>
           </Step>
         </CloseMessageModal>
         <SignSmallImg>

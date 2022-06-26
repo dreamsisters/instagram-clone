@@ -47,8 +47,11 @@ export const Nav = styled.nav`
         border-radius: 6px;
         background-color: #f2f2f2;
       }
+      > input:focus {
+        outline-style: none;
+        background-color: #ebebeb;
+      }
     }
-
     > .col.menu {
       display: flex;
       justify-content: flex-end;
@@ -57,14 +60,24 @@ export const Nav = styled.nav`
         display: flex;
         justify-content: space-between;
       }
+      > a {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+        margin-right: 10px;
+        border: solid 1px #dfdfdf;
+        border-radius: 5px;
+      }
+      > a:last-child {
+        color: #fff;
+        background-color: #ff9595;
+      }
     }
   }
 `;
 
-export const MenuItem = styled.li`
+export const NavIcon = styled.div`
   border-radius: 50%;
   margin-right: 10px;
-  list-style: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -73,13 +86,13 @@ export const MenuItem = styled.li`
     width: 25px;
     height: 25px;
   }
-  > .fiIcon {
+  > a > .fiIcon {
     width: 20px;
     height: 20px;
   }
 `;
 
-export const UserProfile = styled.div`
+export const UserIcon = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -92,49 +105,32 @@ export const UserProfile = styled.div`
   cursor: pointer;
 `;
 
-export const UserProfileCard = styled.div`
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #f2f2f2;
-  > .user-avartar {
-    width: 43px;
-    height: 43px;
-    border-radius: 50%;
-    background-color: #f2f2f2;
-  }
-
-  > .user-desc {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-    > .user-nickname {
-      font-size: 15px;
-    }
-
-    > .user-auth {
-      font-size: 13px;
-      color: #878787;
-    }
-  }
-`;
-
 export const MenuList = styled.ul`
-  padding-top: 10px;
-  text-align: start;
-  font-size: 14px;
-  > li {
-    padding: 10px 20px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  > a,
+  button {
     width: 100%;
-    border: none;
+    padding: 5px;
+    margin: 3px 0;
+    font-size: 0.85rem;
     background-color: #fff;
-
+    border: none;
+    display: flex;
+    align-items: center;
     &:hover {
+      cursor: pointer;
+      border-radius: 3px;
       background-color: #f2f2f2;
     }
+    > .mdICon {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
   }
-
-  > .logout-button {
+  > .borderTop {
     border-top: 1px solid #f2f2f2;
   }
 `;
