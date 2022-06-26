@@ -29,6 +29,7 @@ module.exports = () => {
 					};
 				}
 
+<<<<<<< HEAD
 				try {
 					const user = await User.findOne(criteria);
 					if (!user) {
@@ -40,6 +41,19 @@ module.exports = () => {
 					if (!match) {
 						return done(null, false, { reason: '비밀번호가 틀렸습니다.' });
 					}
+=======
+        try {
+          const user = await User.findOne(criteria);
+          if (!user) {
+            return done(null, false, { reason: "존재하지 않는 사용자입니다." }); // (서버 에러, 성공, 클라이언트 에러)
+          }
+
+          // const match = await bcrypt.compare(password, user.password);
+
+          if (password != user.password) {
+            return done(null, false, { reason: "비밀번호가 틀렸습니다." });
+          }
+>>>>>>> HG
 
 					return done(null, user); // 성공 시 사용자 정보 넘겨주기.
 				} catch (error) {
