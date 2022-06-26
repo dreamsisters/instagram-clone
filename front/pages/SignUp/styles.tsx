@@ -51,6 +51,19 @@ export const CloseButton = styled.div`
   cursor: pointer;
 `;
 
+export const PrevButton = styled.button`
+  margin-left: 50px;
+  color: #878787;
+  font-weight: 600;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+  }
+`;
+
 export const Step = styled.div`
   width: 400px;
   padding: 20px;
@@ -61,29 +74,30 @@ export const Step = styled.div`
   > * {
     margin: 10px 0;
   }
+  > .PrevButton {
+    cursor: pointer;
+    color: #878787;
+
+    &:hover {
+      color: #000;
+    }
+  }
+  > a {
+    width: 80%;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: #ededed;
+    }
+  }
   > .titles {
     text-align: center;
-    margin-bottom: 60px;
-    > .previous-button {
-      position: absolute;
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: underline;
-        color: blue;
-      }
-    }
-    > h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      font-weight: 600;
-      padding-top: 30px;
-    }
-
+    margin-bottom: 30px;
     > p {
-      font-size: 18px;
+      padding-top: 15px;
       color: #878787;
-      font-weight: 600;
     }
   }
 `;
@@ -91,38 +105,58 @@ export const Step = styled.div`
 export const Form = styled.form`
   width: 80%;
   > .labels {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 30px;
 
-    > label {
-      margin-bottom: 10px;
-      > span {
-        font-size: 13px;
-        display: block;
-        margin-bottom: 4px;
+    & label {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+
+      > input:focus ~ p {
+        font-size: 10px;
+        transform: translateY(-12px);
       }
       > input {
         width: 100%;
-        padding: 10px;
+        height: 40px;
+        padding: 5px 10px 0 10px;
         border: 1px solid #dfdfdf;
         border-radius: 10px;
-        &:focus {
-          outline: none;
-        }
       }
     }
+    > .dateInput {
+      width: 100%;
+      height: 40px;
+      padding: 5px 10px 0 10px;
+      border: 1px solid #dfdfdf;
+      border-radius: 10px;
+    }
+  }
+  > .toSignIn {
+    text-decoration: none;
   }
 `;
 
 export const Button = styled.button<{ disabled: boolean }>`
   padding: 10px;
   width: 100%;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 10px;
   border: 1px solid ${(props) => (props.disabled ? '#dfdfdf' : 'rgba(0, 0, 0, 0.3)')};
   background-color: ${(props) => (props.disabled ? '#f2f2f2' : '#2F9BFF')};
   color: ${(props) => (props.disabled ? '#878787' : '#fff')};
+  cursor: pointer;
+  &:hover {
+    opacity: 70%;
+  }
+`;
+
+export const WhiteButton = styled.div`
+  padding: 8px;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  text-align: center;
 `;
 
 export const SocialLogins = styled.ul`

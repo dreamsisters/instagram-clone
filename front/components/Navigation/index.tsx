@@ -3,6 +3,31 @@ import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } f
 import Menu from '@components/Menu';
 import Logo from '@components/Logo';
 import { Link } from 'react-router-dom';
+import { MdSearch, MdNotificationsNone, MdOutlineApps, MdInsertPhoto } from 'react-icons/md';
+import { FiSend } from 'react-icons/fi';
+// icon list
+// MdAccountCircle
+// MdCheckCircleOutline
+// MdDeleteOutline
+// MdFavoriteBorder
+// MdFavorite
+// MdHighlightOff
+// MdLogout
+// MdPermIdentity
+// MdPeopleAlt
+// MdShare
+// MdOutlineHome
+// MdQuestionAnswer
+// MdOutlineShoppingBag
+// MdOutlineShoppingCart
+// MdOutlineStore
+// MdSupervisorAccount
+// MdClear
+// MdArrowBackIosNew
+// MdArrowForwardIos
+// MdAssignmentInd
+// MdBookmarkBorder
+// MdBookmark
 
 interface IProps {
   isLoggedIn: boolean;
@@ -10,12 +35,12 @@ interface IProps {
 }
 
 const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
-  const [showUserProfileMenu, setShoUserProfileMenu] = useState(true);
+  const [showUserProfileMenu, setShoUserProfileMenu] = useState(false);
   const style = useMemo(() => ({ top: 48, right: 0, width: '260px' }), []);
 
   const onCloseModal = useCallback(() => {}, []);
   const onCloseMenu = useCallback(() => {
-    setShoUserProfileMenu(false);
+    // setShoUserProfileMenu(false);
   }, []);
 
   const onClickUserProfile = useCallback(() => {
@@ -29,14 +54,26 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }: IProps) => {
             <Logo />
           </Link>
         </div>
-        <div className="col search-box">검색</div>
+        <div className="col search-box">
+          <input type={'text'}></input>
+          <a href="/">
+            <MdSearch className="navIcon" />
+          </a>
+        </div>
         <ul className="col menu">
-          {/* 아아콘으로 변경*/}
-          <MenuItem>만들기</MenuItem>
-          <MenuItem>앱</MenuItem>
-          <MenuItem>디엠</MenuItem>
-          <MenuItem>좋아요</MenuItem>
-          <UserProfile onClick={onClickUserProfile}>아무개</UserProfile>
+          {/* icon */}
+          <div className="iconBox">
+            <MenuItem>
+              <MdNotificationsNone className="mdIcon" />
+            </MenuItem>
+            <MenuItem>
+              <FiSend className="fiIcon" />
+            </MenuItem>
+            <MenuItem>
+              <MdOutlineApps className="mdIcon" />
+            </MenuItem>
+            <UserProfile onClick={onClickUserProfile}>아무개</UserProfile>
+          </div>
         </ul>
       </div>
       <Menu style={style} show={showUserProfileMenu} onCloseModal={onCloseMenu}>
