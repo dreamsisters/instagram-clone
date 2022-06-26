@@ -22,14 +22,14 @@ import fetcher from '@utils/fetcher';
 
 interface IProps {
   isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  // setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   navState: string;
 }
 
-const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
+const DefaultNav = ({ isLoggedIn, navState }: IProps) => {
   const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
 
-  console.log(userData);
+  // console.log(userData);
 
   //Nav Icon Modal
   const [showNotice, setNotice] = useState(false);
@@ -79,7 +79,7 @@ const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
     <Nav>
       <div className={'inner'}>
         <div className="col logo">
-          <Logo />
+          <Logo path="default" />
         </div>
         <div className="col search-box">
           <input type={'text'}></input>

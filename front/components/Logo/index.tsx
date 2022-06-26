@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TxtLogo } from './styles';
 import { Link } from 'react-router-dom';
+import { interpolateAs } from 'next/dist/shared/lib/router/router';
 
-export const Logo = () => {
+interface IProps {
+  path: string;
+}
+
+export const Logo = ({ path }: IProps) => {
+  const [url, setUrl] = useState('/');
+
+  useEffect(() => {
+    if (path == 'sign') {
+      setUrl('#');
+    }
+  });
+
   return (
-    <Link to="/">
+    <Link to={url} className="linkA">
       <TxtLogo>instagram</TxtLogo>
     </Link>
   );

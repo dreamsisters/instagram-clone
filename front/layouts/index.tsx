@@ -4,6 +4,8 @@ import loadable from '@loadable/component';
 import DefaultNav from '@components/DefaultNav';
 import MarketNav from '@components/MarketNav';
 import UnknownNav from '@components/UnknownNav';
+import useSWR from 'swr';
+import fetcher from '@utils/fetcher';
 
 const Home = loadable(() => import('@pages/Home'));
 const Search = loadable(() => import('@pages/Search'));
@@ -14,38 +16,36 @@ const SignIn = loadable(() => import('@pages/SignIn'));
 const SignUp = loadable(() => import('@pages/SignUp'));
 
 const App = () => {
-  const [isLoggedIn, setLoggedInUser] = useState(true);
+  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+
   //현재 페이지 경로
   let path = window.location.pathname;
-  console.log(path);
+  // console.log(path);
+
   //세션 & 페이지 상태
   let navState = '';
-  console.log(navState);
+  // console.log(navState);
 
   //세션 & 페이지 별 flag 조건
   if (path == '/sign_in' || path == '/sign_up') {
     navState = 'signPage';
-  } else if (isLoggedIn == true && path == '/market') {
+  } else if (userData == true && path == '/market') {
     navState = 'market';
-  } else if (isLoggedIn == false) {
+  } else if (userData == false) {
     navState = 'unknown';
-  } else if (isLoggedIn == true) {
+  } else if (userData == true) {
     navState = 'user';
   }
+  // console.log(typeof path);
 
-  console.log(typeof path);
   return (
     <>
       {/* 조건별 nav */}
       {navState === 'signPage' && null} {/* nav 표시 없음 */}
       {/* sign in & up 버튼 표시 */}
       {navState === 'unknown' && <UnknownNav />}
-      {navState === 'user' && (
-        <DefaultNav isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedInUser} navState={navState} />
-      )}
-      {navState === 'market' && (
-        <MarketNav isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedInUser} navState={navState} />
-      )}
+      {navState === 'user' && <DefaultNav isLoggedIn={userData} navState={navState} />}
+      {navState === 'market' && <MarketNav isLoggedIn={userData} navState={navState} />}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/search" component={Search} />

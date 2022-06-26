@@ -1,5 +1,15 @@
-import { SignBase, SignLargeImg, SignSmallImg, Form, Step, PrevButton, WhiteButton, Button } from './styles';
-import React, { useCallback, useState } from 'react';
+import {
+  SignBase,
+  SignLargeImg,
+  SignSmallImg,
+  Form,
+  Step,
+  Certification,
+  PrevButton,
+  WhiteButton,
+  Button,
+} from './styles';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CloseMessageModal from '@components/CloseMessageModal';
@@ -16,9 +26,9 @@ interface IFormValues {
 }
 
 const SignUp = () => {
-  const [showFirstStep, setShowFirstStep] = useState(true);
-  // const [showSecondStep, setShowSecondStep] = useState(false);
-  const [showLastStep, setShowLastStep] = useState(false);
+  const [step1, setStep1] = useState(false);
+  const [step2, setStep2] = useState(false);
+  const [step3, setStep3] = useState(true);
 
   const {
     register,
@@ -49,23 +59,42 @@ const SignUp = () => {
   CheckPassword(password, setPassword);
 
   //Move Step
-  // const moveToSecond = useCallback(() => {
-  //   setShowFirstStep(false);
-  //   setShowSecondStep(true);
-  // }, []);
+  const moveToSecond = useCallback(() => {
+    setStep1(false);
+    setStep2(true);
+    setStep3(false);
+  }, []);
 
   const moveToLast = useCallback(() => {
-    setShowFirstStep(false);
-    // setShowSecondStep(false);
-    setShowLastStep(true);
+    setStep1(false);
+    setStep2(false);
+    setStep3(true);
   }, []);
 
   const moveBackToFirst = useCallback(() => {
-    setShowFirstStep(true);
-    // setShowSecondStep(false);
-    setShowLastStep(false);
+    setStep1(true);
+    setStep2(false);
+    setStep3(false);
   }, []);
 
+  //인증 오류 시 alert 애니메이션
+  let certification = false; //인증 여부
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (certification == false) {
+      setHeight(30);
+    }
+  }, [certification]);
+
+  const TransitionEnd = () => {
+    setHeight(0);
+  };
+
+  //인증번호 재발송
+  const reSend = useCallback(() => {}, []);
+
+  //form submit
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
 
@@ -81,10 +110,10 @@ const SignUp = () => {
     moveToLast();
   }, []);
 
-  const onSubmitBirth = useCallback((data: IFormValues) => {
-    console.log(data);
-    moveToLast();
-  }, []);
+  // const onSubmitBirth = useCallback((data: IFormValues) => {
+  //   console.log(data);
+  //   moveToLast();
+  // }, []);
 
   return (
     <SignBase>
@@ -93,17 +122,17 @@ const SignUp = () => {
       </SignLargeImg>
       <Step>
         {/* STEP 1 - 기본정보 */}
-        <CloseMessageModal show={showFirstStep}>
+        <CloseMessageModal show={step1}>
           <Step>
             <div className={'titles'}>
-              <Logo />
+              <Logo path="sign" />
               <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
             </div>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <div className={'labels'}>
                 <label>
                   <input type={'text'} {...register('auth', { required: true })} />
-                  <InputLable isValue={isAuth} text="이메일 주소 또는 전화번호" />
+                  <InputLable isValue={isAuth} text="이메일 주소, 닉네임 혹은 전화번호" />
                 </label>
                 <label>
                   <input type={'text'} {...register('name', { required: true })} />
@@ -111,15 +140,15 @@ const SignUp = () => {
                 </label>
                 <label>
                   <input type={'text'} {...register('nickname', { required: true })} />
-                  <InputLable isValue={isNickname} text="사용자 이름" />
+                  <InputLable isValue={isNickname} text="닉네임" />
                 </label>
                 <label>
                   <input type={'password'} {...register('password', { required: true })} />
                   <InputLable isValue={isPassword} text="비밀번호" />
                 </label>
               </div>
-              <Button disabled={false} type={'submit'}>
-                test submit
+              <Button disabled={false} type={'submit'} onClick={moveToSecond}>
+                계속 하기
               </Button>
             </Form>
             <Link to="/sign_in" className="toSignIn">
@@ -128,27 +157,40 @@ const SignUp = () => {
           </Step>
         </CloseMessageModal>
 
-        {/* STEP 2 - 생일 */}
-        {/* <CloseMessageModal show={showSecondStep}>
+        {/* STEP 2 - 이메일, 전화번호 인증 */}
+        <CloseMessageModal show={step2}>
           <PrevButton onClick={moveBackToFirst}>이전으로</PrevButton>
           <Step>
             <div className={'titles'}>
-              <h3>생일 추가</h3>
-              <p>공개 프로필에 포함되지 않습니다.</p>
+              <p>
+                {auth}로 발송된
+                <br />
+                인증번호 6자리를 입력해주세요.
+              </p>
+              <p className="step1Auth">010-1xxx-xxx2</p>
             </div>
-            <Form onSubmit={handleSubmit(onSubmitBirth)}>
+            <Form>
               <div className={'labels'}>
-                <input type={'date'} placeholder={'일'} className="dateInput" />
+                <label>
+                  <input type={'text'} />
+                  <InputLable isValue={isNickname} text="인증번호 6자리" />
+                </label>
+                <Certification onTransitionEnd={TransitionEnd} h={height}>
+                  인증번호가 틀렸습니다.
+                </Certification>
               </div>
               <Button disabled={false} type={'submit'}>
                 가입 완료
               </Button>
             </Form>
+            <button type="button" className="resend">
+              인증번호 재발송
+            </button>
           </Step>
-        </CloseMessageModal> */}
+        </CloseMessageModal>
 
         {/* STEP 3 - 로그인 완료 */}
-        <CloseMessageModal show={showLastStep}>
+        <CloseMessageModal show={step3}>
           <Step>
             <div className={'titles'}>
               <p>회원가입이 완료되었습니다.</p>

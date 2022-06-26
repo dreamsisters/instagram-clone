@@ -20,11 +20,11 @@ import { FiSend } from 'react-icons/fi';
 
 interface IProps {
   isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  // setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   navState: string;
 }
 
-const MarketNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
+const MarketNav = ({ isLoggedIn, navState }: IProps) => {
   //props 조건 별 nav 구분
 
   //Navigation Icon Modal
