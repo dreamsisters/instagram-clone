@@ -16,6 +16,9 @@ import {
   MdOutlineShoppingBag as Shop,
 } from 'react-icons/md';
 import { FiSend } from 'react-icons/fi';
+import useSWR from 'swr';
+import axios from 'axios';
+import fetcher from '@utils/fetcher';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -24,7 +27,9 @@ interface IProps {
 }
 
 const DefaultNav = ({ isLoggedIn, setIsLoggedIn, navState }: IProps) => {
-  //props 조건 별 nav 구분
+  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+
+  console.log(userData);
 
   //Nav Icon Modal
   const [showNotice, setNotice] = useState(false);

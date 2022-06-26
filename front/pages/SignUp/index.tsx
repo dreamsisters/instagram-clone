@@ -6,9 +6,10 @@ import CloseMessageModal from '@components/CloseMessageModal';
 import InputLable from '@components/InputLable';
 import { CheckEmail, CheckName, CheckPassword, CheckNickname } from '@components/CheckValue';
 import { Logo } from '@components/Logo';
+import axios from 'axios';
 
 interface IFormValues {
-  email: string;
+  auth: string;
   name: string;
   nickname: string;
   password: string;
@@ -16,7 +17,7 @@ interface IFormValues {
 
 const SignUp = () => {
   const [showFirstStep, setShowFirstStep] = useState(true);
-  const [showSecondStep, setShowSecondStep] = useState(false);
+  // const [showSecondStep, setShowSecondStep] = useState(false);
   const [showLastStep, setShowLastStep] = useState(false);
 
   const {
@@ -27,7 +28,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<IFormValues>({
     defaultValues: {
-      email: '',
+      auth: '',
       name: '',
       nickname: '',
       password: '',
@@ -35,39 +36,49 @@ const SignUp = () => {
     mode: 'onChange',
   });
 
-  const { email, name, nickname, password } = watch();
+  const { auth, name, nickname, password } = watch();
 
-  const [isEmail, setEmail] = useState(false);
+  const [isAuth, setAuth] = useState(false);
   const [isName, setName] = useState(false);
   const [isNickname, setNickname] = useState(false);
   const [isPassword, setPassword] = useState(false);
 
-  CheckEmail(email, setEmail);
+  CheckEmail(auth, setAuth);
   CheckName(name, setName);
   CheckNickname(nickname, setNickname);
   CheckPassword(password, setPassword);
 
   //Move Step
-  const moveToSecond = useCallback(() => {
-    setShowFirstStep(false);
-    setShowSecondStep(true);
-  }, []);
+  // const moveToSecond = useCallback(() => {
+  //   setShowFirstStep(false);
+  //   setShowSecondStep(true);
+  // }, []);
 
   const moveToLast = useCallback(() => {
     setShowFirstStep(false);
-    setShowSecondStep(false);
+    // setShowSecondStep(false);
     setShowLastStep(true);
   }, []);
 
   const moveBackToFirst = useCallback(() => {
     setShowFirstStep(true);
-    setShowSecondStep(false);
+    // setShowSecondStep(false);
     setShowLastStep(false);
   }, []);
 
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
-    moveToSecond();
+
+    axios
+      .post('/api/users/', data, { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    moveToLast();
   }, []);
 
   const onSubmitBirth = useCallback((data: IFormValues) => {
@@ -91,8 +102,8 @@ const SignUp = () => {
             <Form onSubmit={handleSubmit(onSubmit)}>
               <div className={'labels'}>
                 <label>
-                  <input type={'email'} {...register('email', { required: true })} />
-                  <InputLable isValue={isEmail} text="이메일 주소" />
+                  <input type={'text'} {...register('auth', { required: true })} />
+                  <InputLable isValue={isAuth} text="이메일 주소 또는 전화번호" />
                 </label>
                 <label>
                   <input type={'text'} {...register('name', { required: true })} />
@@ -108,7 +119,7 @@ const SignUp = () => {
                 </label>
               </div>
               <Button disabled={false} type={'submit'}>
-                다음
+                test submit
               </Button>
             </Form>
             <Link to="/sign_in" className="toSignIn">
@@ -118,7 +129,7 @@ const SignUp = () => {
         </CloseMessageModal>
 
         {/* STEP 2 - 생일 */}
-        <CloseMessageModal show={showSecondStep}>
+        {/* <CloseMessageModal show={showSecondStep}>
           <PrevButton onClick={moveBackToFirst}>이전으로</PrevButton>
           <Step>
             <div className={'titles'}>
@@ -134,7 +145,7 @@ const SignUp = () => {
               </Button>
             </Form>
           </Step>
-        </CloseMessageModal>
+        </CloseMessageModal> */}
 
         {/* STEP 3 - 로그인 완료 */}
         <CloseMessageModal show={showLastStep}>

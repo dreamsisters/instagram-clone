@@ -5,9 +5,10 @@ import InputLable from '@components/InputLable';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { CheckEmail, CheckPassword } from '@components/CheckValue';
+import axios from 'axios';
 
 interface IFormValues {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -20,22 +21,31 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<IFormValues>({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
     mode: 'onChange',
   });
 
-  const { email, password } = watch();
+  const { username, password } = watch();
 
   const [isEmail, setEmail] = useState(false);
   const [isPassword, setPassword] = useState(false);
 
-  CheckEmail(email, setEmail);
+  CheckEmail(username, setEmail);
   CheckPassword(password, setPassword);
 
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
+
+    axios
+      .post('/api/users/login', data, { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   return (
@@ -49,7 +59,7 @@ const SignIn = () => {
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={'labels'}>
               <label>
-                <input type={'email'} {...register('email')} />
+                <input type={'text'} {...register('username')} />
                 <InputLable isValue={isEmail} text="이메일 주소" />
               </label>
               <label>

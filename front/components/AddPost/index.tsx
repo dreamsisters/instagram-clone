@@ -5,7 +5,7 @@ import Album from '@components/Album';
 import AlbumDND from '@components/AlbumDND';
 import Profile from '@components/Profile';
 import BlueBtn from '@components/BlueBtn';
-import db from '../../typings/db';
+// import db from '../../typings/db';
 import {
   MdOutlineShoppingBag as Shop,
   MdOutlineClear as Clear,

@@ -3,6 +3,8 @@ import { Nav } from '../DefaultNav/styles';
 import { Logo } from '@components/Logo';
 import { Link } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
+import useSWR from 'swr';
+import fetcher from '@utils/fetcher';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -11,6 +13,8 @@ interface IProps {
 }
 
 const UnknownNav = () => {
+  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+
   return (
     <Nav>
       <div className={'inner'}>
