@@ -5,7 +5,8 @@ const { User, AuthToken, Post } = require("../../../models"); // db.User, db.Aut
 
 const router = express.Router();
 
-// 로그인 유저
+// api/users/
+// 로그인 유저 
 router.get("/me", (req, res, next) => {
   console.log(req.user);
   return res.json(req.user || false);
@@ -32,7 +33,17 @@ router.post("/", async (req, res, next) => {
     const payload = Math.floor(100000 + Math.random() * 900000) + "";
     const authToken = await AuthToken.create({ payload });
     console.log(authToken);
-    return res.status(200).json({ email, phone, nickname });
+    // return res.status(200).json({ email, phone, nickname });
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = await User.create({
+      email,
+      phone,
+      name,
+      nickname,
+      password: hashedPassword,
+    });
+    return res.status(201).send("ok"); // 200 - 성공, 201 - 생성
+
   } catch (error) {
     console.error(error);
     next(error);
@@ -80,7 +91,7 @@ router.post("/login", (req, res, next) => {
     if (info) {
       return res.status(401).send(info.reason); // 401 - 허가되지 않음
     }
-
+      console.log(user);
     return req.login(user, async (loginErr) => {
       if (loginErr) {
         console.error(loginErr);
@@ -114,9 +125,12 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/logout", (req, res) => {
-  req.logout(); // 쿠키 지우고
-  req.session.destroy(); // 세션까지 지우기
-  return res.send("ok");
+  req.logout((err) => { 
+    if(err) {console.error(err)}
+    req.session.destroy(); 
+    return res.send("ok");
+  }); 
+ 
 });
 
 module.exports = router;
