@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const Header = styled.div`
@@ -41,6 +42,16 @@ export const Step = styled.div<{ show: boolean; className?: string }>`
     opacity: 50%;
     margin-bottom: 50px;
   }
+  /* input register test */
+  /* > #fileInput {
+    width: 260px;
+    color: #fff;
+    text-align: center;
+    background-color: #2f9bff;
+    padding: 6px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+  } */
   > label {
     width: 260px;
     color: #fff;
@@ -62,10 +73,16 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: auto;
+`;
+
+const opaticy = keyframes`
+  0% {opacity: 1;}
+  100% {opacity: 0;}
 `;
 
 export const PostPreview = styled.div`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,6 +90,17 @@ export const PostPreview = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 15px;
+    > .postOption {
+      display: flex;
+      > button {
+        display: flex;
+        align-items: center;
+        > .mdIcon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
     > button {
       /* width: ; */
     }
@@ -94,6 +122,7 @@ export const ImgPreview = styled.div`
 export const Textarea = styled.textarea`
   width: 300px;
   height: 350px;
+  padding: 5px;
   resize: none;
   border: 1px solid #dfdfdf;
   border-radius: 3px;

@@ -17,9 +17,6 @@ export const Container: FC = () => {
   const [items, setItems] = useState([
     //Todo : props로 전달받은 image를 state로 선언
     { id: 1, text: 'image 1' },
-    { id: 2, text: 'image 2' },
-    { id: 3, text: 'image 3' },
-    { id: 4, text: 'image 4' },
   ]);
 
   //드래그 한 item의 index를 hoverIndex 위치로 바꾸는 함수(state 변경)

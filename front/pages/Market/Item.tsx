@@ -2,6 +2,7 @@ import type { Identifier, XYCoord } from 'dnd-core';
 import { url } from 'inspector';
 import React, { useCallback, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { useForm } from 'react-hook-form';
 
 import { ItemTypes } from './ItemTypes';
 
@@ -18,6 +19,14 @@ interface DragItem {
   index: number;
   id: string;
   type: string;
+}
+
+interface IFormValues {
+  author: string;
+  postId: string;
+  FileList: FileList;
+  Text: string;
+  comment?: boolean;
 }
 
 export const Item = ({ id, text, index, moveItem }: ItemProps) => {
@@ -91,26 +100,49 @@ export const Item = ({ id, text, index, moveItem }: ItemProps) => {
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IFormValues>({
+    defaultValues: {
+      author: 'author1',
+      postId: '001',
+      FileList: undefined,
+      Text: '',
+      comment: true,
+    },
+  });
+
+  const { author, postId, FileList, Text, comment } = watch();
+
   const change = useCallback((e: any) => {
     let files = e.target.files;
     const fileArr = Object.values(files);
     fileArr.map((file: any) => {
-      fileList.push({
-        name: file.name,
-        url: URL.createObjectURL(file),
-        date: file.lastModified,
-      });
-      setURL(fileList[0].url);
+      // fileList.push({
+      //   name: file.name,
+      //   url: URL.createObjectURL(file),
+      //   date: file.lastModified,
+      // });
+      // setURL(fileList[0].url);
     });
-    console.log(url);
+    // console.log(url);
+    console.log(files);
+  }, []);
+
+  const onSubmit = useCallback(() => {
+    console.log(watch('FileList'));
   }, []);
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
         {text}
       </div>
-      <input type="file" onChange={change}></input>
-    </>
+      <input type="file" multiple {...register('FileList')} onChange={change}></input>
+      <button type="submit">submit</button>
+    </form>
   );
 };

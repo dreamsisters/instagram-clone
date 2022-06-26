@@ -28,9 +28,9 @@ const ProfileMenuModal = () => {
           위시리스트
         </a>
         <Link to="/">계정 설정</Link>
-        <a className="borderTop" onClick={logout}>
+        <button type="button" className="borderTop" onClick={logout}>
           로그아웃
-        </a>
+        </button>
       </MenuList>
     </>
   );

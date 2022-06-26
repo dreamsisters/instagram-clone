@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState, useCallback, useRef, useMemo } from 'react';
-import { ImgWrapper, Images, ProcessDot, Dot } from './styled';
+import { TagAlert, ImgWrapper, Images, ProcessDot, Dot } from './styled';
 import { LeftArrow, RightArrow } from '@components/ArrowBtn';
 
 interface IProps {
@@ -14,7 +14,14 @@ const Album: FC<IProps> = ({ imgList, type }) => {
   const [albumStep, setAlbumStep] = useState(1);
   //step이 '1' 증감 할 때마다 '330px' 이동
   const [transform, setTransform] = useState(0);
-  // console.log(transform);
+  //tag alert show state
+  const [tagAlert, setTagAlert] = useState(false);
+
+  useEffect(() => {
+    if (type == 'create') {
+      setTagAlert(true);
+    }
+  }, [type]);
 
   //carousel width
   // const widthRef = useRef<any>(0);
@@ -65,26 +72,29 @@ const Album: FC<IProps> = ({ imgList, type }) => {
   );
 
   return (
-    <ImgWrapper type={type}>
-      <LeftArrow
-        stepObj={albumObj}
-        length={albumLength}
-        setStep={setAlbumStep}
-        move={transform}
-        setMove={setTransform}
-        width={type}
-      />
-      <RightArrow
-        stepObj={albumObj}
-        length={albumLength}
-        setStep={setAlbumStep}
-        move={transform}
-        setMove={setTransform}
-        width={type}
-      />
-      <div className="carousel">{imgList.map((file) => renderItem(file))}</div>
-      <ProcessDot length={albumLength}>{imgList.map((img, i) => renderDot(albumStep, i))}</ProcessDot>
-    </ImgWrapper>
+    <>
+      <ImgWrapper type={type}>
+        <TagAlert show={tagAlert}>사진을 눌러 태그하세요</TagAlert>
+        <LeftArrow
+          stepObj={albumObj}
+          length={albumLength}
+          setStep={setAlbumStep}
+          move={transform}
+          setMove={setTransform}
+          width={type}
+        />
+        <RightArrow
+          stepObj={albumObj}
+          length={albumLength}
+          setStep={setAlbumStep}
+          move={transform}
+          setMove={setTransform}
+          width={type}
+        />
+        <div className="carousel">{imgList.map((file) => renderItem(file))}</div>
+        <ProcessDot length={albumLength}>{imgList.map((img, i) => renderDot(albumStep, i))}</ProcessDot>
+      </ImgWrapper>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { DragBox } from './styled';
 import ImgItem from '@components/ImgItem';
 
 interface IProps {
+  setDT: any;
   fileObj: FileList;
   albumList: Array<any>;
   deleteFile: (e: any) => void;
@@ -18,7 +19,7 @@ export interface Item {
 let files: Array<any> = [];
 let dtFiles: Array<any> = []; //File 객체
 
-const DragContainer = ({ fileObj, albumList, deleteFile, setFile }: IProps) => {
+const DragContainer = ({ setDT, fileObj, albumList, deleteFile, setFile }: IProps) => {
   const [fileList, setFileList] = useState(files);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const DragContainer = ({ fileObj, albumList, deleteFile, setFile }: IProps) => {
     dtFiles.splice(dtIindex, 1);
     dtFiles.splice(hoverIndex, 0, dtObj!); //옮길 index로 drag 중인 item을 입력
     setFile(dtFiles);
+    // setDT = dtFiles;
     console.log(dtFiles);
 
     //albumList
@@ -53,7 +55,7 @@ const DragContainer = ({ fileObj, albumList, deleteFile, setFile }: IProps) => {
     files.splice(fileIndex, 1); //drag 중인 item을 삭제하고
     files.splice(hoverIndex, 0, dragObj); //옮길 index로 drag 중인 item을 입력
     setFileList(files);
-    console.log(files);
+    // console.log(files);
   }, []);
 
   const [someDragging, setSomeDragging] = useState(false);

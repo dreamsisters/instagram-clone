@@ -1,9 +1,32 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
+const opacity = keyframes`
+  0% {opacity: 1;}
+  60% {opacity: 1;}
+  100% {
+    opacity: 0;
+    z-index: -10;
+  }
+`;
+
+export const TagAlert = styled.div<{ show: boolean }>`
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-top: 50%;
+  text-align: center;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: ${opacity} 1.5s ease-in;
+`;
+
 export const ImgWrapper = styled.div<{ type: string }>`
-  width: ${(props) => (props.type == 'read' ? `450px` : `330px`)};
-  height: ${(props) => (props.type == 'read' ? `450px` : `330px`)};
-  margin-bottom: ${(props) => (props.type == 'read' ? `` : `50px`)};
+  width: ${(props) => (props.type == 'create' ? `450px` : `330px`)};
+  height: ${(props) => (props.type == 'create' ? `450px` : `330px`)};
+  margin-bottom: ${(props) => (props.type == 'create' ? `` : `50px`)};
   border: 1px solid #dfdfdf;
   position: relative;
   display: flex;
