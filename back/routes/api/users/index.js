@@ -4,7 +4,6 @@ const { Op } = require("sequelize");
 const passport = require("passport");
 const { User, AuthToken, Post } = require("../../../models");
 const { REG_PHONE, REG_EMAIL } = require("../../../utils");
-const { toJSON } = require("express-session/session/cookie"); // db.User, db.AuthToken
 
 const router = express.Router();
 
@@ -70,28 +69,50 @@ router.post("/confirm", async (req, res, next) => {
 });
 
 // 인증 토큰 재전송(변경)
-router.post("/resend", async (req, res, next) => {
+router.post("/confirm-token/resend", async (req, res, next) => {
   const { nickname } = req.session.prepUser;
   const payload = Math.floor(100000 + Math.random() * 900000) + "";
-  AuthToken.update(
-    { payload },
-    {
-      where: { nickname },
-      returning: true,
-      plain: true,
-    }
-  )
-    .then(() => {
-      const newToken = AuthToken.findOne({
-        where: { payload, nickname },
-      });
-      console.log(newToken);
-      return res.status(200).send("ok");
-    })
-    .catch((error) => {
-      console.log(error);
-      next(error);
+
+  try {
+    await AuthToken.update(
+      { payload },
+      {
+        where: { nickname },
+        // returning: true,
+        // plain: true,
+      }
+    );
+
+    const newToken = await AuthToken.findOne({
+      where: { payload, nickname },
     });
+
+    console.log(newToken);
+
+    return res.status(200).send("ok");
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+  // AuthToken.update(
+  //   { payload },
+  //   {
+  //     where: { nickname },
+  //     returning: true,
+  //     plain: true,
+  //   }
+  // )
+  //   .then(() => {
+  //     const newToken = AuthToken.findOne({
+  //       where: { payload, nickname },
+  //     });
+  //     console.log(newToken);
+  //     return res.status(200).send("ok");
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     next(error);
+  //   });
 });
 
 // 로그인
