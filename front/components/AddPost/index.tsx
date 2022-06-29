@@ -182,17 +182,18 @@ const AddPost: FC<IProps> = ({ setState }) => {
   // console.log(dt.files);
 
   const onSubmit = useCallback((data: IFormValues) => {
-    console.log(data);
-    console.log(dt.files);
+    // console.log(dt.files);
 
     let param = {};
 
-    param = `
-      FileList: ${dt.files}
-      text: ${data.text}
-      tagBubble: ${data.tagBubble}
-      comment: ${data.comment}
-    `;
+    param = {
+      FileList: dt.files,
+      text: data.text,
+      tagBubble: data.tagBubble,
+      comment: data.comment,
+    };
+    console.log(param);
+
     axios
       .post('/api/posts', param)
       .then((response) => {

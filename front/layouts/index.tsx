@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import loadable from '@loadable/component';
 import DefaultNav from '@components/DefaultNav';
 import MarketNav from '@components/MarketNav';
@@ -20,23 +20,28 @@ const App = () => {
 
   //현재 페이지 경로
   let path = window.location.pathname;
-  // console.log(path);
 
   //세션 & 페이지 상태
   let navState = '';
-  // console.log(navState);
 
   //세션 & 페이지 별 flag 조건
   if (path == '/sign_in' || path == '/sign_up') {
     navState = 'signPage';
-  } else if (userData == true && path == '/market') {
+  } else if (userData && path == '/market') {
+    console.log(path);
     navState = 'market';
   } else if (userData == false) {
     navState = 'unknown';
-  } else if (userData == true) {
+  } else if (userData) {
     navState = 'user';
   }
-  // console.log(typeof path);
+
+  if (userData == false && navState == 'market') {
+    console.log(userData);
+    console.log(navState);
+
+    return <Link to="/" />;
+  }
 
   return (
     <>

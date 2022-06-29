@@ -13,9 +13,11 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Logo } from '@components/Logo';
 import InputLable from '@components/InputLable';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { CheckEmail, CheckPassword } from '@components/CheckValue';
 import axios from 'axios';
+import useSWR from 'swr';
+import fetcher from '@utils/fetcher';
 
 interface IFormValues {
   username: string;
@@ -23,6 +25,9 @@ interface IFormValues {
 }
 
 const SignIn = () => {
+  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+  // console.log(userData);
+
   const {
     register,
     handleSubmit,
@@ -71,12 +76,20 @@ const SignIn = () => {
     axios
       .post('/api/users/login', data, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
+        mutate();
+        console.log('login success');
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+  useEffect(() => {
+    if (userData != false) {
+      window.location.replace('/');
+      // <Link to="/" />;
+    }
+  }, [userData]);
 
   return (
     <>

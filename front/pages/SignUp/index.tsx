@@ -115,16 +115,18 @@ const SignUp = () => {
   //payload submit
   const submitPayload = useCallback((e: any) => {
     e.preventDefault();
-    const payloadValue = inputRef.current!.value;
-    console.log(payloadValue);
+    const data = {
+      payload: inputRef.current!.value,
+    };
+    console.log(data);
 
     axios
-      .post('/api/users/confirm', payloadValue)
+      .post('/api/users/confirm', data)
       .then((res) => {
         console.log(res.data, 'success');
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error, 'fail');
       });
 
     moveToLast();
