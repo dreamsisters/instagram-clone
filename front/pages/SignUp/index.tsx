@@ -9,7 +9,7 @@ import {
   WhiteButton,
   Button,
 } from './styles';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CloseMessageModal from '@components/CloseMessageModal';
@@ -26,9 +26,9 @@ interface IFormValues {
 }
 
 const SignUp = () => {
-  const [step1, setStep1] = useState(false);
+  const [step1, setStep1] = useState(true);
   const [step2, setStep2] = useState(false);
-  const [step3, setStep3] = useState(true);
+  const [step3, setStep3] = useState(false);
 
   const {
     register,
@@ -99,9 +99,29 @@ const SignUp = () => {
     console.log(data);
 
     axios
-      .post('/api/users/', data, { withCredentials: true })
+      .post('/api/users/', data)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, 'success');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    moveToSecond();
+  }, []);
+
+  // const [payload, setPaylod] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  //payload submit
+  const submitPayload = useCallback((e: any) => {
+    e.preventDefault();
+    const payloadValue = inputRef.current!.value;
+    console.log(payloadValue);
+
+    axios
+      .post('/api/users/confirm', payloadValue)
+      .then((res) => {
+        console.log(res.data, 'success');
       })
       .catch((error) => {
         console.error(error);
@@ -142,9 +162,7 @@ const SignUp = () => {
                   <InputLable isValue={isPassword} text="비밀번호" />
                 </label>
               </div>
-              <Button disabled={false} type={'submit'} onClick={moveToSecond}>
-                계속 하기
-              </Button>
+              <Button type={'submit'}>계속 하기</Button>
             </Form>
             <Link to="/sign_in" className="toSignIn">
               <WhiteButton>로그인 페이지로 이동</WhiteButton>
@@ -164,21 +182,19 @@ const SignUp = () => {
               </p>
               <p className="step1Auth">010-1xxx-xxx2</p>
             </div>
-            <Form>
+            <Form onSubmit={submitPayload}>
               <div className={'labels'}>
                 <label>
-                  <input type={'text'} />
+                  <input ref={inputRef} type="text" />
                   <InputLable isValue={isNickname} text="인증번호 6자리" />
                 </label>
                 <Certification onTransitionEnd={TransitionEnd} h={height}>
                   인증번호가 틀렸습니다.
                 </Certification>
               </div>
-              <Button disabled={false} type={'submit'}>
-                가입 완료
-              </Button>
+              <Button type={'submit'}>가입 완료</Button>
             </Form>
-            <button type="button" className="resend">
+            <button type="submit" className="resend">
               인증번호 재발송
             </button>
           </Step>

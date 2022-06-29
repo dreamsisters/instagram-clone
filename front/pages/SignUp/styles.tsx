@@ -155,7 +155,7 @@ export const Certification = styled.div<{ h: number }>`
   transition: all 1.5s ease;
 `;
 
-export const Button = styled.button<{ disabled: boolean }>`
+export const Button = styled.button<{ disabled?: boolean }>`
   padding: 10px;
   width: 100%;
   font-size: 14px;
