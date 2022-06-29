@@ -183,6 +183,7 @@ const AddPost: FC<IProps> = ({ setState }) => {
 
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
+    console.log(dt.files);
 
     let param = {};
 

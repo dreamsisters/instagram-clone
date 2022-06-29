@@ -3,25 +3,13 @@ import { Nav } from '../DefaultNav/styles';
 import { Logo } from '@components/Logo';
 import { Link } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
-import useSWR from 'swr';
-import fetcher from '@utils/fetcher';
-
-interface IProps {
-  isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  navState: string;
-}
 
 const UnknownNav = () => {
-  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
-
   return (
     <Nav>
       <div className={'inner'}>
         <div className="col logo">
-          <Link to="/">
-            <Logo />
-          </Link>
+          <Logo path="sign" />
         </div>
         <div className="col search-box">
           <input type={'text'}></input>

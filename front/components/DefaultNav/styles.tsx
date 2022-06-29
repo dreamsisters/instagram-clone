@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Nav = styled.nav`
+  min-width: 600px;
   width: 100vw;
   height: 60px;
   border: 1px solid #dfdfdf;
@@ -65,11 +66,11 @@ export const Nav = styled.nav`
         padding: 5px 10px;
         margin-right: 10px;
         border: solid 1px #dfdfdf;
-        border-radius: 5px;
+        border-radius: 3px;
       }
       > a:last-child {
         color: #fff;
-        background-color: #ff9595;
+        background-color: #45a5ff;
       }
     }
   }

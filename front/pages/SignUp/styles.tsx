@@ -87,10 +87,18 @@ export const Step = styled.div`
     text-decoration: none;
     text-align: center;
     border-radius: 10px;
-
-    &:hover {
+    &:hover:not(.linkA) {
       background-color: #ededed;
     }
+  }
+  > .resend {
+    margin-top: 20px;
+    border: none;
+    text-decoration: underline;
+    color: #878787;
+    background-color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
   }
   > .titles {
     text-align: center;
@@ -99,6 +107,9 @@ export const Step = styled.div`
       padding-top: 15px;
       color: #878787;
     }
+    > .step1Auth {
+      font-size: 0.8rem;
+    }
   }
 `;
 
@@ -106,9 +117,8 @@ export const Form = styled.form`
   width: 80%;
   > .labels {
     margin-bottom: 30px;
-
     & label {
-      margin-bottom: 15px;
+      margin-bottom: 5px;
       display: flex;
       align-items: center;
 
@@ -121,15 +131,12 @@ export const Form = styled.form`
         height: 40px;
         padding: 5px 10px 0 10px;
         border: 1px solid #dfdfdf;
-        border-radius: 10px;
+        border-radius: 5px;
       }
     }
-    > .dateInput {
-      width: 100%;
-      height: 40px;
-      padding: 5px 10px 0 10px;
-      border: 1px solid #dfdfdf;
-      border-radius: 10px;
+    > .resetPW {
+      text-decoration: underline;
+      text-align: center;
     }
   }
   > .toSignIn {
@@ -137,15 +144,27 @@ export const Form = styled.form`
   }
 `;
 
+export const Certification = styled.div<{ h: number }>`
+  max-height: ${(props) => props.h};
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #ff4a4a;
+  font-size: 0.8rem;
+  overflow: hidden;
+  transition: all 1.5s ease;
+`;
+
 export const Button = styled.button<{ disabled: boolean }>`
   padding: 10px;
   width: 100%;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 10px;
-  border: 1px solid ${(props) => (props.disabled ? '#dfdfdf' : 'rgba(0, 0, 0, 0.3)')};
-  background-color: ${(props) => (props.disabled ? '#f2f2f2' : '#2F9BFF')};
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+  background-color: #45a5ff;
   color: ${(props) => (props.disabled ? '#878787' : '#fff')};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   cursor: pointer;
   &:hover {
     opacity: 70%;
@@ -155,7 +174,7 @@ export const Button = styled.button<{ disabled: boolean }>`
 export const WhiteButton = styled.div`
   padding: 8px;
   border: 1px solid #dfdfdf;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
 `;
 

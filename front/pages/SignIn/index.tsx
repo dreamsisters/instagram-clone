@@ -1,5 +1,15 @@
-import { SignBase, SignLargeImg, SignSmallImg, Form, Step, WhiteButton, Button, SocialLogins } from '../SignUp/styles';
-import React, { useCallback, useMemo, useState } from 'react';
+import {
+  SignBase,
+  SignLargeImg,
+  SignSmallImg,
+  Form,
+  Step,
+  Certification,
+  WhiteButton,
+  Button,
+  SocialLogins,
+} from '../SignUp/styles';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Logo } from '@components/Logo';
 import InputLable from '@components/InputLable';
 import { useForm } from 'react-hook-form';
@@ -35,6 +45,26 @@ const SignIn = () => {
   CheckEmail(username, setEmail);
   CheckPassword(password, setPassword);
 
+  //로그인 실패 alert 애니메이션
+  let idCertification = false; //id 일치 여부
+  let pwCertification = false; //pw 일치 여부
+  const [idError, setID] = useState(0);
+  const [pwError, setPW] = useState(0);
+
+  useEffect(() => {
+    if (idCertification == false) {
+      setID(30);
+    }
+    if (pwCertification == false) {
+      setPW(30);
+    }
+  }, [idCertification, pwCertification]);
+
+  const TransitionEnd = () => {
+    setID(0);
+    setPW(0);
+  };
+
   const onSubmit = useCallback((data: IFormValues) => {
     console.log(data);
 
@@ -55,18 +85,26 @@ const SignIn = () => {
           <img src="../../src-accets/SignLImg.png" />
         </SignLargeImg>
         <Step>
-          <Logo />
+          <Logo path="sign" />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={'labels'}>
               <label>
                 <input type={'text'} {...register('username')} />
-                <InputLable isValue={isEmail} text="이메일 주소" />
+                <InputLable isValue={isEmail} text="이메일 주소, 닉네임 혹은 전화번호" />
               </label>
+              <Certification onTransitionEnd={TransitionEnd} h={idError}>
+                일치하는 계정이 없습니다.
+              </Certification>
               <label>
                 <input type={'password'} {...register('password')} />
                 <InputLable isValue={isPassword} text="비밀번호" />
               </label>
-              <Link to="/">비밀번호를 잊으셨나요?</Link>
+              <Certification onTransitionEnd={TransitionEnd} h={pwError}>
+                비밀번호가 틀렸습니다.
+              </Certification>
+              <Link to="/sign_in" className="resetPW">
+                비밀번호를 잊으셨나요?
+              </Link>
             </div>
             <Button disabled={false} type={'submit'}>
               로그인
