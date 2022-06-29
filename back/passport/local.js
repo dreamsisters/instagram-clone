@@ -39,7 +39,6 @@ module.exports = () => {
           if (!match && !instead) {
             return done(null, false, { reason: "unMatch" });
           }
-
           return done(null, user); // 성공 시 사용자 정보 넘겨주기.
         } catch (error) {
           console.error("❌ Server error", error);
