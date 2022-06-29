@@ -18,7 +18,7 @@ router.post("/", async (req, res, next) => {
   const { auth, name, nickname, password } = req.body;
   let email = null;
   let phone = null;
-  if (auth.indexOf("@") > -1) {
+  if (auth.indexOf("@") !== -1) {
     email = auth;
   } else {
     phone = auth;
@@ -142,7 +142,9 @@ router.post("/login", (req, res, next) => {
       (REG_PHONE.test(username) || REG_EMAIL.test(username));
 
     if (condition) {
-      return res.status(200).send(allAccountsWithoutPassword);
+      return res
+        .status(200)
+        .send({ single: false, accounts: allAccountsWithoutPassword });
     }
 
     return req.login(user, (loginErr) => {
@@ -151,12 +153,21 @@ router.post("/login", (req, res, next) => {
         return next(loginErr);
       }
 
-      const result = {
-        user: allTargetUserWithoutPassword,
-        accounts: allAccountsWithoutPassword.filter(
-          (v) => v.id !== allTargetUserWithoutPassword.id
-        ),
-      };
+      const accounts = allAccountsWithoutPassword.filter(
+        (v) => v.id !== allTargetUserWithoutPassword.id
+      );
+
+      const result =
+        accounts.length > 1
+          ? {
+              single: true,
+              user: allTargetUserWithoutPassword,
+              accounts,
+            }
+          : {
+              single: true,
+              user: allTargetUserWithoutPassword,
+            };
 
       console.log(result);
       return res.status(200).send(result);
