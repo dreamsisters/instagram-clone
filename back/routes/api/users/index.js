@@ -88,31 +88,11 @@ router.post("/confirm-token/resend", async (req, res, next) => {
     });
 
     console.log(newToken);
-
     return res.status(200).send("ok");
   } catch (error) {
     console.log(error);
     next(error);
   }
-  // AuthToken.update(
-  //   { payload },
-  //   {
-  //     where: { nickname },
-  //     returning: true,
-  //     plain: true,
-  //   }
-  // )
-  //   .then(() => {
-  //     const newToken = AuthToken.findOne({
-  //       where: { payload, nickname },
-  //     });
-  //     console.log(newToken);
-  //     return res.status(200).send("ok");
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     next(error);
-  //   });
 });
 
 // 로그인
@@ -134,7 +114,6 @@ router.post("/login", (req, res, next) => {
     // 이 로직 나중에 수정할 것. -> 조건
     const allAccountsWithoutPassword = await User.findAll({
       where: { [Op.and]: [{ email: user.email }, { phone: user.phone }] },
-      attributes: ["id", "nickname"],
     });
 
     console.log(allAccountsWithoutPassword);
