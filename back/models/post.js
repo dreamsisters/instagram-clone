@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      locations: {
+      location: {
         type: DataTypes.STRING(40),
         allowNull: true,
       },
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         default: false,
       },
-      turnOffComment: {
+      turnOffComments: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         default: false,
@@ -32,9 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     db.Post.hasMany(db.Image);
     db.Post.hasMany(db.Video);
     db.Post.hasMany(db.Comment);
+    db.Post.hasMany(db.Mention);
     db.Post.belongsToMany(db.Hashtag, { through: "PostHashtag" });
+    db.Post.belongsToMany(db.Mention, { through: "PostMention" });
     db.Post.belongsTo(db.User); // as로 구별
-    db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" });
+    db.Post.belongsToMany(db.User, { through: "Like", as: "Liker" });
     db.Post.belongsTo(db.Post, { as: "Retweet" });
   };
   return Post;
