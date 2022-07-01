@@ -1,4 +1,4 @@
-# Redesign Instagram
+# Instagram Redesign
 ### 인스타그램의 핵심 기능을 Clone 한 Web-App 개발
 * 프로젝트 진행 기간  
     - 2022.05.17 ~ 2022.06.30 (종료 예정)
