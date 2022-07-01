@@ -20,6 +20,13 @@
 - success: { email: string, phone: string, nickname: string }
 - fail: false (403 Error)
 
+### a (링크로 연결) /http:localhost:3095/oauth/kakao
+
+- 카카오로 로그인
+- success: redirect to `/`
+- \*\* api axios 로 가능한지는 추후 알아보고 수정할 예정
+- .env 에 `KAKAO_ID` 필요, 추후 공유할 예정
+
 ### POST /api/user/confirm
 
 - 인증 토큰 submit
