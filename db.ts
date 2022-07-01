@@ -38,3 +38,4 @@ export interface IComment {}
 export interface IImage {}
 export interface IVideo {}
 export interface IMention {}
+

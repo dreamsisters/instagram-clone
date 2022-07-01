@@ -63,5 +63,9 @@
 ## /posts (여러 게시물)
 
 ### GET /api/posts
-- 여러 게시물 랜덤으로 가져오기.
+- 여러 게시물 생성 순으로 가져오기.
+- success: IPost[]
+
+### GET /api/posts/followers 
+- 팔로잉하는 유저 게시물만 가져오기.
 - success: IPost[]
