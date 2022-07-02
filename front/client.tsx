@@ -8,6 +8,9 @@ import axios from 'axios';
 
 import App from './layouts';
 
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:3090';
+
 render(
   <BrowserRouter>
     <App />

@@ -2,7 +2,7 @@ import { Nav, NavIcon, UserIcon, MenuList } from '../DefaultNav/styles';
 import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SmallModal from '@components/SmallModal';
-import { MarketLogo } from '@components/Logo';
+// import { MarketLogo } from '@components/Logo';
 import ProfileMenuModal from '@components/ProfileMenuModal';
 import FullModal from '@components/FullModal';
 import AddPost from '@components/AddPost';
@@ -74,9 +74,7 @@ const MarketNav = ({ isLoggedIn, navState }: IProps) => {
   return (
     <Nav>
       <div className={'inner'}>
-        <div className="col logo">
-          <MarketLogo />
-        </div>
+        <div className="col logo">{/* <MarketLogo /> */}</div>
         <div className="col search-box">
           <input type={'text'}></input>
           <Link to="/search">

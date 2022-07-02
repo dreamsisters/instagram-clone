@@ -1,6 +1,6 @@
 import { Nav, NavIcon, UserIcon, MenuList } from './styles';
-import React, { Dispatch, FC, SetStateAction, useCallback, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import MenuModal from '@components/MenuModal';
 import ProfileMenuModal from '@components/ProfileMenuModal';
 import FullModal from '@components/FullModal';
@@ -14,6 +14,7 @@ import {
   MdOutlineAddPhotoAlternate as AddPostIcon,
   MdOutlineRecordVoiceOver as LiveChat,
   MdOutlineShoppingBag as Shop,
+  MdOutlineHome as Home,
 } from 'react-icons/md';
 import { FiSend } from 'react-icons/fi';
 import useSWR from 'swr';
@@ -21,15 +22,33 @@ import axios from 'axios';
 import fetcher from '@utils/fetcher';
 
 interface IProps {
-  isLoggedIn: boolean;
+  // match: any;
+  path: string;
+  isLogin: boolean;
   // setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   navState: string;
 }
 
-const DefaultNav = ({ isLoggedIn, navState }: IProps) => {
+const DefaultNav = ({ path, isLogin, navState }: IProps) => {
   const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
 
-  // console.log(userData);
+  //market nav status
+  const [home, setHome] = useState({});
+  const [market, setMarket] = useState({});
+
+  const block = { display: 'block' };
+  const none = { display: 'none' };
+
+  useEffect(() => {
+    console.log(path);
+    if (path === '/market') {
+      setHome(block);
+      setMarket(none);
+    } else {
+      setHome(none);
+      setMarket(block);
+    }
+  }, [path]);
 
   //Nav Icon Modal
   const [showNotice, setNotice] = useState(false);
@@ -79,7 +98,7 @@ const DefaultNav = ({ isLoggedIn, navState }: IProps) => {
     <Nav>
       <div className={'inner'}>
         <div className="col logo">
-          <Logo path="default" />
+          <Logo path={path} />
         </div>
         <div className="col search-box">
           <input type={'text'}></input>
@@ -106,10 +125,13 @@ const DefaultNav = ({ isLoggedIn, navState }: IProps) => {
               <MoreIcon onClick={onMoreIcon} className="mdIcon moreIcon" />
               <SmallModal setState={setMoreIcon} show={showMoreIcon} style={moreIconStyle}>
                 <MenuList>
-                  <a href="/market">
+                  <Link to="/" style={home}>
+                    <Home className="mdICon" />홈
+                  </Link>
+                  <Link to="/market" style={market}>
                     <Shop className="mdICon" />
                     마켓
-                  </a>
+                  </Link>
                   <button onClick={addPost}>
                     <AddPostIcon className="mdICon" />새 게시물 작성
                     <FullModal show={addPostModal} setState={setAddPost} setMoreIcon={setMoreIcon}>

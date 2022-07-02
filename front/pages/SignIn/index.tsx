@@ -18,15 +18,21 @@ import { CheckEmail, CheckPassword } from '@components/CheckValue';
 import axios from 'axios';
 import useSWR from 'swr';
 import fetcher from '@utils/fetcher';
+import { IPath } from '@typings/db';
 
 interface IFormValues {
   username: string;
   password: string;
 }
 
-const SignIn = () => {
+const SignIn = ({ setPath }: IPath) => {
   const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
   // console.log(userData);
+
+  useEffect(() => {
+    // console.log(location.pathname);
+    setPath(location.pathname);
+  });
 
   const {
     register,
@@ -78,18 +84,12 @@ const SignIn = () => {
       .then((res) => {
         mutate();
         console.log('login success');
+        window.location.replace('/');
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
-
-  useEffect(() => {
-    if (userData != false) {
-      window.location.replace('/');
-      // <Link to="/" />;
-    }
-  }, [userData]);
 
   return (
     <>

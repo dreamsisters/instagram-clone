@@ -135,3 +135,7 @@ export const MenuList = styled.ul`
     border-top: 1px solid #f2f2f2;
   }
 `;
+
+// export const MainLink = styled.a<{ show: boolean }>`
+//   display: ${(props) => (props.show ? 'block' : 'none')};
+// `;

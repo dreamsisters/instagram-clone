@@ -17,6 +17,7 @@ import InputLable from '@components/InputLable';
 import { CheckEmail, CheckName, CheckPassword, CheckNickname } from '@components/CheckValue';
 import { Logo } from '@components/Logo';
 import axios from 'axios';
+import { IPath } from '@typings/db';
 
 interface IFormValues {
   auth: string;
@@ -25,7 +26,12 @@ interface IFormValues {
   password: string;
 }
 
-const SignUp = () => {
+const SignUp = ({ setPath }: IPath) => {
+  useEffect(() => {
+    // console.log(location.pathname);
+    setPath(location.pathname);
+  });
+
   const [step1, setStep1] = useState(true);
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);

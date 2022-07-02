@@ -14,3 +14,8 @@ export interface IUser {
   Followers: [];
   Followings: [];
 }
+
+export interface IPath {
+  match?: any;
+  setPath: React.Dispatch<React.SetStateAction<string>>;
+}
