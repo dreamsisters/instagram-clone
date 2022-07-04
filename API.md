@@ -1,70 +1,87 @@
-# REST API
+## REST API
 
-HTTP 요청 리스트(ajax)
+## /user (유저)
 
-### GET /posts
+### GET /api/user/:id
 
-- 내 포스트 목록을 가져옴
-- return: IPost[]
+- 해당 유저(id) 정보
+- then: IUser
 
-### GET /posts/:id
+### GET /api/user/me
 
-- :id 포스트 가져옴
-- return: IPost
+- 로그인된 유저 정보
+- success: {user: IUser, accounts: {id: number, nickname: string}[]}
+- fail: false
 
-### GET /directs/:id/chats
+### POST /api/user
 
-- :id와 나눈 dm을 가져옴
-- query: { perPage: number(한 페이지 당 몇 개), page: number(페이지) }
-- return: IDM[]
+- 가입 정보 submit & nickname validation
+- body: { auth: string, name: string, nickname: string, password: string}
+- success: { email: string, phone: string, nickname: string }
+- fail: false (403 Error)
 
-### GET /directs/:id/unreads
+### a (링크로 연결) /http:localhost:3095/oauth/kakao
 
-- :id가 보낸 안 읽은 채팅 수를 가져옴.
-- query: { after: Timestamp }
-- return: number
--
+- 카카오로 로그인
+- success: redirect to `/`
+- \*\* api axios 로 가능한지는 추후 알아보고 수정할 예정
+- .env 에 `KAKAO_ID` 필요, 추후 공유할 예정
 
-### POST /directs/:id/chats
+### POST /api/user/confirm
 
-- :id와 나눈 dm을 저장
-- body: { content: string(내용) }
-- return: 'ok'
-- dm 소켓 이벤트가 emit됨
+- 인증 토큰 submit
+- body: { payload: string }
+- success: "ok"
+- fail: false (403 Error)
 
-### POST /directs/:id/images
+### POST /api/user/confirm-token/resend
 
-- :id에게 보낸 이미지 저장
-- body: { image: 이미지(multipart) }
-- return: 'ok'
-- dm 소켓 이벤트가 emit됨
--
+- 인증 토큰 재전송
+- success: "ok"
 
-### POST /directs/:id/videos
-
-- :id에게 보낸 동영상 저장
-- body: { video: 이미지(multipart) }
-- return: 'ok'
-- dm 소켓 이벤트가 emit됨
-
-### GET /users/me
-
-- 내 로그인 정보를 가져옴, 로그인되어있지 않으면 false
-- return: IUser | false
-
-### POST /users
-
-- 회원가입
-- body: { email: string(이메일), name: string(성명), nickname: string(닉네임), password: string(비밀번호), phone: string(전화번호), gender: string(성별), birth: number(생년월일) }
-- return: 'ok'
-
-### POST /users/login
+### POST /api/user/login
 
 - 로그인
-- body: { email: string(이메일), nickname: string(닉네임), phone: string(전화번호), password: string(비밀번호) }
-- return: IUser
+- body: { username: string, password: string }
+- success
+  - if 계정이 1개 or username(인증 방식) 이 nickname 일 경우(계정 선택이 불필요하여 바로 로그인 되는 경우),
+  - { currentAccount: IUser, additionalAccounts: { id: number, nickname: string }[] }
+  - else 계정이 2개 이상 && username(인증 방식) 이 email 또는 phone 일 경우(계정 선택이 필요하여 바로 로그인 되지 않는 경우,
+  - { currentAccount: false, totalAccounts: IUser[] }
+- error: "unExist"(존재하지 않는 사용자) || "unMatch"(잘못된 비밀번호)
 
-### POST /users/logout
+### POST /api/user/logout
 
 - 로그아웃
-- return: 'ok'
+- success: "ok"
+
+## /post (단일 게시물)
+
+### POST /api/post
+
+- 게시물 생성
+- 사진/동영상, hashtag, 댓글작성 여부 설정, content
+- body: { content: string, hashtags: string[], mentions: string[], imageFiles: [], videoFiles: [], hideCounts: boolean, turnOffComments: boolean }
+- hideCounts, turnOffComments 는 초기값(false)으로 설정되어 있음으로 값을 변경할 경우를 제외하고 body 에 포함하지 않도록 한다.
+
+### POST /api/post/:postId/comment
+
+- 댓글 작성
+- body: { content: string, userId: string, postId: string}
+
+### POST /api/post/:postId/comment/:commentId
+
+- 대댓글 작성
+- body: { content: string, postId: string, replyingUserId: string, repliedUserId: string}
+
+## /posts (여러 게시물)
+
+### GET /api/posts
+
+- 여러 게시물 생성 순으로 가져오기.
+- success: IPost[]
+
+### GET /api/posts/followers
+
+- 팔로잉하는 유저 게시물만 가져오기.
+- success: IPost[]

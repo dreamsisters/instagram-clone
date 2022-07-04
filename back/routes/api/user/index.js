@@ -2,19 +2,43 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const passport = require("passport");
-const { User, AuthToken, Post } = require("../../../models");
-const { REG_PHONE, REG_EMAIL } = require("../../../utils");
+const { User, AuthToken, Post, Mention } = require("../../../models");
+const { REG_PHONE, REG_EMAIL } = require("../../../utils/reg");
+const { isLoggedIn, isNotLoggedIn } = require("../../middlewares");
 
 const router = express.Router();
 
 // 로그인 유저
-router.get("/me", (req, res, next) => {
-  console.log(req.user);
+router.get("/me", async (req, res, next) => {
+  try {
+    if (req.user) {
+      const user = await User.findOne({
+        where: { id: req.user.id },
+        attributes: { exclude: "password" },
+        include: [
+          {
+            model: Post,
+            attributes: ["id"],
+          },
+          { model: User, as: "Followings", attributes: ["id"] },
+          { model: User, as: "Followers", attributes: ["id"] },
+          { model: User, as: "AdditionalAccounts", attributes: ["id"] },
+          { model: Mention, as: "Mentioned", attributes: ["id"] },
+        ],
+      });
+      return res.status(200).json(user);
+    }
+    return res.status(200).send(false);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+
   return res.json(req.user || false);
 });
 
 // 유저 생성
-router.post("/", async (req, res, next) => {
+router.post("/", isNotLoggedIn, async (req, res, next) => {
   const { auth, name, nickname, password } = req.body;
   let email = null;
   let phone = null;
@@ -42,7 +66,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // 인증 토큰 확인
-router.post("/confirm", async (req, res, next) => {
+router.post("/confirm", isNotLoggedIn, async (req, res, next) => {
   const { payload } = req.body;
   const { email, phone, name, nickname, password } = req.session.prepUser;
 
@@ -96,7 +120,7 @@ router.post("/confirm-token/resend", async (req, res, next) => {
 });
 
 // 로그인
-router.post("/login", (req, res, next) => {
+router.post("/login", isNotLoggedIn, (req, res, next) => {
   const { username } = req.body;
   // 재시도 시, 성공 ? login
   passport.authenticate("local", async (err, user, info) => {
@@ -113,27 +137,26 @@ router.post("/login", (req, res, next) => {
     // 여기까지 왔으면 로그인 성공한 것! => 로그인 유저 정보 반환하기.
     // 이 로직 나중에 수정할 것. -> 조건
     const allAccountsWithoutPassword = await User.findAll({
-      where: { [Op.and]: [{ email: user.email }, { phone: user.phone }] },
+      where: {
+        [Op.or]: [
+          { email: user.email, name: user.name },
+          { phone: user.phone, name: user.name },
+        ],
+        provider: "local",
+      },
+      attributes: ["id", "nickname", "password"],
     });
 
-    console.log(allAccountsWithoutPassword);
     const allTargetUserWithoutPassword = await User.findOne({
       where: { id: user.id },
       attributes: {
         exclude: ["password"],
       },
       include: [
-        {
-          model: Post,
-        },
-        {
-          model: User,
-          as: "Followers",
-        },
-        {
-          model: User,
-          as: "Followings",
-        },
+        { model: User, as: "Followings", attributes: ["id"] },
+        { model: User, as: "Followers", attributes: ["id"] },
+        { model: User, as: "AdditionalAccounts", attributes: ["id"] },
+        { model: Mention, as: "Mentioned", attributes: ["id"] },
       ],
     });
 
@@ -141,10 +164,12 @@ router.post("/login", (req, res, next) => {
       allAccountsWithoutPassword.length > 1 &&
       (REG_PHONE.test(username) || REG_EMAIL.test(username));
 
+    // 계정 선택해야 할 때
     if (condition) {
-      return res
-        .status(200)
-        .send({ single: false, accounts: allAccountsWithoutPassword });
+      return res.status(200).send({
+        currentAccount: false,
+        totalAccounts: allAccountsWithoutPassword,
+      });
     }
 
     return req.login(user, (loginErr) => {
@@ -153,29 +178,26 @@ router.post("/login", (req, res, next) => {
         return next(loginErr);
       }
 
-      const accounts = allAccountsWithoutPassword.filter(
+      const additionalAccounts = allAccountsWithoutPassword.filter(
         (v) => v.id !== allTargetUserWithoutPassword.id
       );
 
       const result =
-        accounts.length > 1
+        additionalAccounts.length >= 1
           ? {
-              single: true,
-              user: allTargetUserWithoutPassword,
-              accounts,
+              currentAccount: allTargetUserWithoutPassword,
+              additionalAccounts,
             }
           : {
-              single: true,
-              user: allTargetUserWithoutPassword,
+              currentAccount: allTargetUserWithoutPassword,
             };
 
-      console.log(result);
-      return res.status(200).send(result);
+      return res.status(200).send(allTargetUserWithoutPassword);
     });
   })(req, res, next);
 });
 
-router.post("/logout", (req, res, next) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
   req.logout((error) => {
     if (error) return next(error);
     req.session.destroy();

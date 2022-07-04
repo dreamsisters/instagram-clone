@@ -7,6 +7,7 @@ export interface IUser {
   avartar: string;
   bio: string;
   snsId: string;
+  provider: string;
   createdAt: string;
   Posts: [];
   Followers: IUser[];
@@ -38,4 +39,3 @@ export interface IComment {}
 export interface IImage {}
 export interface IVideo {}
 export interface IMention {}
-
