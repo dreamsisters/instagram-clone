@@ -8,7 +8,7 @@ import fetcher from '@utils/fetcher';
 import { IUser } from '@typings/db';
 
 const ProfileMenuModal = () => {
-  const { data: userData, error, mutate } = useSWR<IUser>('/api/users/me', fetcher);
+  const { data: userData, error, mutate } = useSWR<IUser>('/api/user/me', fetcher);
 
   const logout = () => {
     if (confirm('로그아웃 하시겠습니까?')) {
@@ -16,7 +16,7 @@ const ProfileMenuModal = () => {
       // Todo 세션 로그인 정보 초기화하는 코드 추가
       // window.location.replace('/');
       axios
-        .post('/api/users/logout', { withCredentials: true })
+        .post('/api/user/logout')
         .then((res) => {
           console.log(res.data);
           return <Redirect to="/" />;

@@ -183,7 +183,7 @@ export const SocialLogins = styled.ul`
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
-  > img {
+  > a {
     width: 40px;
     height: 40px;
     margin-right: 10px;

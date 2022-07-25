@@ -102,7 +102,7 @@ export const PostPreview = styled.div`
       }
     }
     > button {
-      /* width: ; */
+      height: 35px;
     }
   }
 `;

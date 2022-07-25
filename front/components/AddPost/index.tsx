@@ -5,6 +5,7 @@ import Album from '@components/Album';
 import AlbumDND from '@components/AlbumDND';
 import Profile from '@components/Profile';
 import BlueBtn from '@components/BlueBtn';
+// import UserTagProvider from '@utils/AlbumContext';
 // import db from '../../typings/db';
 import {
   MdOutlineShoppingBag as Shop,
@@ -19,7 +20,7 @@ import axios from 'axios';
 interface IFormValues {
   FileList: Array<object>;
   text?: Array<string>;
-  tagBubble?: object;
+  tagUsers?: Array<object>;
   comment?: boolean;
 }
 
@@ -41,8 +42,8 @@ const AddPost: FC<IProps> = ({ setState }) => {
   //album state
   let ImgList: Array<any> = [];
   const [album, setAlbum] = useState(ImgList);
-  //options
-  const [option, setOption] = useState(false);
+  //tag user list
+  const [tagUser, setTagUser] = useState(Array<object>);
 
   const stepObj = {
     stepType: 'postStep',
@@ -71,14 +72,14 @@ const AddPost: FC<IProps> = ({ setState }) => {
     formState: { errors },
   } = useForm<IFormValues>({
     defaultValues: {
-      FileList: [],
+      // FileList: [], input data가 아닌, df 리스트 그대로 전송
       text: [],
-      tagBubble: [],
+      tagUsers: [],
       comment: true,
     },
   });
 
-  const { FileList, text, tagBubble, comment } = watch();
+  const { FileList, text, tagUsers, comment } = watch();
 
   //close AddPost Modal
   const onClear = () => {
@@ -183,19 +184,20 @@ const AddPost: FC<IProps> = ({ setState }) => {
 
   const onSubmit = useCallback((data: IFormValues) => {
     // console.log(dt.files);
+    // console.log(data.tagUsers);
 
     let param = {};
 
     param = {
       FileList: dt.files,
       text: data.text,
-      tagBubble: data.tagBubble,
+      tagUsers: data.tagUsers,
       comment: data.comment,
     };
     console.log(param);
 
     axios
-      .post('/api/posts', param)
+      .post('/api/post', param)
       .then((response) => {
         console.log('success!');
         if (response.data.status) {
@@ -224,7 +226,6 @@ const AddPost: FC<IProps> = ({ setState }) => {
             <input
               id="fileInput"
               type="file"
-              // {...register('FileList')}
               onChange={selectFile}
               accept="image/jpg,image/png,image/heic,image/heif,video/mp4,video/quicktime"
               multiple
@@ -244,7 +245,9 @@ const AddPost: FC<IProps> = ({ setState }) => {
           <LeftArrow name={'이전'} stepObj={stepObj} setStep={setPostStep} />
           <Form id="postForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <PostPreview>
-              <Album imgList={album} type="create" />
+              {/* <UserTagProvider> */}
+                <Album imgList={album} type="create" setTagUser={setTagUser}/>
+              {/* </UserTagProvider> */}
               <div className="postText">
                 <Profile />
                 <Textarea {...register('text')} maxLength={2200} />
@@ -265,11 +268,6 @@ const AddPost: FC<IProps> = ({ setState }) => {
           </Form>
         </Step>
       </AddPostStep>
-      {/* <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data"> */}
-      {/* <label htmlFor="input">파일 선택</label> */}
-      {/* <input id="input" type="file" multiple {...register('FileList')} onChange={selectFile}></input> */}
-      {/* <button type="submit">submit</button> */}
-      {/* </form> */}
     </>
   );
 };

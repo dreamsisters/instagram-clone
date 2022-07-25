@@ -13,15 +13,24 @@ interface IProps {
   setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SmallModal: FC<IProps> = ({ children, show, style, setState }) => {
-  const openModal = useCallback(() => {
-    setState(!show);
-  }, [show]);
+const SmallModal: FC<IProps> = ({ children, id, show, style, setState }) => {
+  const openModal = useCallback(
+    (e: any) => {
+      if (e.target === e.currentTarget) {
+        // console.log('true', e.currentTarget);
+        setState(!show);
+      } else {
+        // console.log('false', e.target);
+        e.preventDefault();
+      }
+    },
+    [show],
+  );
 
   return (
     <SmallModalPortal>
-      <ModalOverlay id="smallModal" show={show} onClick={openModal}>
-        <ModalWrapper>
+      <ModalOverlay id="smallModal" show={show} type={id!}>
+        <ModalWrapper onClick={openModal}>
           <ModalInner style={style}>{children}</ModalInner>
         </ModalWrapper>
       </ModalOverlay>

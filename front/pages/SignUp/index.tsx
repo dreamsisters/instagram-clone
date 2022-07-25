@@ -105,7 +105,7 @@ const SignUp = ({ setPath }: IPath) => {
     console.log(data);
 
     axios
-      .post('/api/users/', data)
+      .post('/api/user/', data)
       .then((res) => {
         console.log(res.data, 'success');
       })
@@ -127,7 +127,7 @@ const SignUp = ({ setPath }: IPath) => {
     console.log(data);
 
     axios
-      .post('/api/users/confirm', data)
+      .post('/api/user/confirm', data)
       .then((res) => {
         console.log(res.data, 'success');
       })

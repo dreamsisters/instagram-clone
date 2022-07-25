@@ -7,7 +7,7 @@ import fetcher from '@utils/fetcher';
 import { IPath } from '@typings/db';
 
 const Market = ({ setPath }: IPath) => {
-  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+  // const { data: userData, error, mutate } = useSWR('/api/user/me', fetcher);
   useEffect(() => {
     // console.log(location.pathname);
     setPath(location.pathname);

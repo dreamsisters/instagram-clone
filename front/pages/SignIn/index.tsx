@@ -26,7 +26,7 @@ interface IFormValues {
 }
 
 const SignIn = ({ setPath }: IPath) => {
-  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+  const { data: userData, error, mutate } = useSWR('/api/user/me', fetcher);
   // console.log(userData);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const SignIn = ({ setPath }: IPath) => {
     console.log(data);
 
     axios
-      .post('/api/users/login', data, { withCredentials: true })
+      .post('/api/user/login', data, { withCredentials: true })
       .then((res) => {
         mutate();
         console.log('login success');
@@ -127,8 +127,12 @@ const SignIn = ({ setPath }: IPath) => {
             <WhiteButton>회원 가입</WhiteButton>
           </Link>
           <SocialLogins>
-            <img src="../../src-accets/Facebook.png" />
-            <img src="../../src-accets/kakao.png" />
+            <a href="http://localhost:3095/oauth/facebook">
+              <img src="../../src-accets/Facebook.png" />
+            </a>
+            <a href="http://localhost:3095/oauth/kakao">
+              <img src="../../src-accets/kakao.png" />
+            </a>
           </SocialLogins>
           {/* Logo media query(width: 650px) */}
           <SignSmallImg>

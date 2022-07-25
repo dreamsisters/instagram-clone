@@ -16,7 +16,8 @@ const SignIn = loadable(() => import('@pages/SignIn'));
 const SignUp = loadable(() => import('@pages/SignUp'));
 
 const App = () => {
-  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+  const { data: userData, error, mutate } = useSWR('/api/user/me', fetcher);
+  // const [userData, setUserData] = useState(true);
 
   //현재 페이지 경로(각 route 별 path)
   const [path, setPath] = useState('/');
@@ -29,8 +30,6 @@ const App = () => {
       console.log('state : logout');
       // console.log(path);
       if (path === '/market' || path === '/directs' || path === '/setting' || path === '/search') {
-        // alert('로그인이 필요한 서비스입니다. [ 로그인 페이지로 이동 ]');
-        // window.location.replace('/sign_in');
         if (window.confirm('로그인이 필요한 서비스입니다. [ 확인 시 로그인 페이지로 이동 ]')) {
           window.location.replace('/sign_in');
         } else {
@@ -48,19 +47,6 @@ const App = () => {
     }
   }, [userData, path]);
 
-  //세션 & 페이지 상태
-  let navState = '';
-
-  //세션 & 페이지 별 nav 조건
-  // if (path == '/sign_in' || path == '/sign_up') {
-  //   navState = 'signPage';
-  // } else if (userData && path == '/direct') {
-  //   navState = 'user';
-  // } else if (userData) {
-  //   navState = 'user';
-  // }
-
-  // const [navigation, setNav] = useState(null)
   const navigation = useCallback(() => {
     console.log('userdata', Boolean(userData));
     if (userData === false) {
@@ -74,18 +60,13 @@ const App = () => {
       }
     } else if (userData) {
       console.log('default');
-      return <DefaultNav path={path} isLogin={userData} navState={navState} />;
+      return <DefaultNav path={path} isLogin={userData} />;
     }
   }, [userData, path]);
 
   return (
     <>
-      {/* 조건별 nav */}
       {navigation()}
-      {/* {path.includes('/sign') && null} nav 표시 없음 */}
-      {/* {userData === false && <UnknownNav />} sign in & up 버튼 표시 */}
-      {/* {userData && <DefaultNav path={path} isLogin={userData} navState={navState} />} */}
-      {/* {navState === 'market' && <MarketNav isLoggedIn={userData} navState={navState} />} */}
       <Switch>
         <Route exact path="/" render={() => <Home setPath={setPath} />} />
         <Route path="/search" render={() => <Search setPath={setPath} />} />

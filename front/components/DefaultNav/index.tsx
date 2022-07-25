@@ -26,11 +26,11 @@ interface IProps {
   path: string;
   isLogin: boolean;
   // setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  navState: string;
+  // navState: string;
 }
 
-const DefaultNav = ({ path, isLogin, navState }: IProps) => {
-  const { data: userData, error, mutate } = useSWR('/api/users/me', fetcher);
+const DefaultNav = ({ path, isLogin }: IProps) => {
+  const { data: userData, error, mutate } = useSWR('/api/user/me', fetcher);
 
   //market nav status
   const [home, setHome] = useState({});

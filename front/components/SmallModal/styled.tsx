@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const ModalOverlay = styled.div<{ show: boolean }>`
+export const ModalOverlay = styled.div<{ show: boolean; type: string }>`
   width: 100%;
   height: 100%;
   top: 0;
@@ -8,7 +8,7 @@ export const ModalOverlay = styled.div<{ show: boolean }>`
   overflow: hidden;
   display: ${(props) => (props.show == true ? 'flex' : 'none')};
   justify-content: center;
-  z-index: 400;
+  z-index: ${(props) => (props.type == 'step3Album' ? 1000 : 400)};
 `;
 
 export const ModalWrapper = styled.div`
